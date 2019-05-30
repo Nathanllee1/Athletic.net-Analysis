@@ -31,9 +31,7 @@ def login():
 def getAthlete(aid, session):
     athleteResults = s.get("https://www.athletic.net/TrackAndField/Athlete.aspx?AID=" + aid).text
     page = BeautifulSoup(athleteResults, features='html.parser')
-
     #print(page.prettify())
-
     name = str(page.find(property="og:title")["content"])
     print('Scraping ' + name + "'s profile")
     data = page.find_all(class_="card-block px-2 pt-2 pb-0")
@@ -55,11 +53,11 @@ def getAthlete(aid, session):
         for seasons in seasonObject:
             #print(seasons.prettify())
             for item in seasons:
-                '''
+
                 print(item.prettify())
                 print()
                 print()
-                '''
+                
                 try:
                     time = events.find("td", style="width:110px").text
                     print(time)
