@@ -27,42 +27,88 @@ def login():
         print('Log in error')
 
 
+spacer = '================================================================================='
 
 def getAthlete(aid, session):
-    athleteResults = s.get("https://www.athletic.net/TrackAndField/Athlete.aspx?AID=" + aid).text
+    #athleteResults = s.get("https://www.athletic.net/TrackAndField/Athlete.aspx?AID=" + aid).text
+    athleteResults = open('Athlete.aspx', 'r')
     page = BeautifulSoup(athleteResults, features='html.parser')
     #print(page.prettify())
+
     name = str(page.find(property="og:title")["content"])
     print('Scraping ' + name + "'s profile")
-    data = page.find_all(class_="card-block px-2 pt-2 pb-0")
+
+    data = page.find(class_="col-md-7 pull-md-5 col-xl-8 pull-xl-4 col-print-7 athleteResults")
+
     #print(data)
     results = {}
-    for events in data:
-        #print(events.prettify())
-        #season = events.find("h5", class_="mb-0")
-        #season = events.parent
+
+    seasonObject = data.find_all(class_='card-block px-2 pt-2 pb-0')
+    for season in seasonObject:
+        year = season['uib-collapse'][7:11]
+        print(year)
+
+        eventData = season.find_all("h5")
+        #print(eventData)
+        for events in eventData:
+            event = events.text
+            #not include relays cause to complicated
+            if "Relay" in event:
+                print('Found relay ' + event + '....skipping')
+                pass
+            else:
+                print(event)
+                resultsObject = season.find_all("tr")
+
+                for results in resultsObject:
+                    for rows in results.find_all("td"):
+                        print(rows.text)
+                    
+        print(spacer)
+                #time = resultsObject.find_all(style="width:60px")
+
+                #print(spacer)
+        #print(spacer)
+
+
+
         #print(season.prettify())
+
+
+
+#s = login()
+getAthlete('8647967', '')
+
+'''
+results example
+
+results = {
+    name: '',
+    results: [
+        {January 12: [clash of titans, 1600, 5:24]},
+    ]
+}
+
+
+
+
+
+
+seasonObject = season.find_all("tbody")
+
+for seasons in seasonObject:
+    #print(seasons.prettify())
+    for meet in seasons:
+
+        print(meet.prettify())
+        print(spacer)
+        print()
+        print()
+
         try:
-            #event = events.find("h5", class_="bold").text
-            event = events.find("h5").text
-            #print(event)
-            results.append(event)
+            time = season.find("td", style="width:110px").text
+            print(time)
         except:
             pass
-        seasonObject = events.find_all("tbody")
-        for seasons in seasonObject:
-            #print(seasons.prettify())
-            for item in seasons:
 
-                print(item.prettify())
-                print()
-                print()
-                
-                try:
-                    time = events.find("td", style="width:110px").text
-                    print(time)
-                except:
-                    pass
-
-s = login()
-getAthlete('8647967', s)
+'''
