@@ -25,46 +25,80 @@ def login():
         return s
     except:
         print('Log in error')
+        return False
 
 
 spacer = '================================================================================='
 
 def getAthlete(aid, session):
-    #athleteResults = s.get("https://www.athletic.net/TrackAndField/Athlete.aspx?AID=" + aid).text
-    athleteResults = open('Athlete.aspx', 'r')
+    athleteResults = s.get("https://www.athletic.net/TrackAndField/Athlete.aspx?AID=" + aid).text
+    #athleteResults = open('Athlete.aspx', 'r')
     page = BeautifulSoup(athleteResults, features='html.parser')
     #print(page.prettify())
-
+    mainForm = {'name':'', 'results':[]}
     name = str(page.find(property="og:title")["content"])
+
+    mainForm['name'] = name
+    print(mainForm)
+
     print('Scraping ' + name + "'s profile")
 
     data = page.find(class_="col-md-7 pull-md-5 col-xl-8 pull-xl-4 col-print-7 athleteResults")
 
-    #print(data)
-    results = {}
-
     seasonObject = data.find_all(class_='card-block px-2 pt-2 pb-0')
     for season in seasonObject:
+
+        #figure out year for later
         year = season['uib-collapse'][7:11]
         print(year)
 
         eventData = season.find_all("h5")
+
         #print(eventData)
         for events in eventData:
             event = events.text
+
             #not include relays cause to complicated
             if "Relay" in event:
                 print('Found relay ' + event + '....skipping')
-                pass
+                continue
             else:
                 print(event)
+
                 resultsObject = season.find_all("tr")
 
                 for results in resultsObject:
+                    resultForm = {'date':'', 'meet':'', 'event':'', 'result':''}
+
+                    rowcounter = 0
+
                     for rows in results.find_all("td"):
-                        print(rows.text)
-                    
-        print(spacer)
+                        rowData = rows.text
+                        #print(rowData)
+                        resultForm['event'] = event
+                        if rowcounter == 1:
+                            result = rowData
+
+                            #print('time: ' + result)
+                            resultForm['result'] = result
+
+                        elif rowcounter == 2:
+                            date = rowData
+                            fullDate = date + ' ' + year
+                            resultForm['date'] = fullDate
+                            #print('date: ' + fullDate)
+
+                        elif rowcounter == 3:
+                            resultForm['meet'] = rowData
+                            #print('meetname: ' + rowData)
+                        rowcounter += 1
+
+            mainForm['results'].append(resultForm)
+    #print(mainForm)'
+
+    for results in mainForm['results']:
+        print(results)
+    #print(spacer)
                 #time = resultsObject.find_all(style="width:60px")
 
                 #print(spacer)
@@ -74,10 +108,8 @@ def getAthlete(aid, session):
 
         #print(season.prettify())
 
-
-
-#s = login()
-getAthlete('8647967', '')
+s = login()
+getAthlete('8647967', s)
 
 '''
 results example
@@ -85,7 +117,7 @@ results example
 results = {
     name: '',
     results: [
-        {January 12: [clash of titans, 1600, 5:24]},
+        {date:'January 12', meetName:'clash of titans', event:1600, result:5:24]},
     ]
 }
 
