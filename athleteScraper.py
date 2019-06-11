@@ -31,7 +31,7 @@ def login():
 
 spacer = '================================================================================='
 
-def getAthlete(aid, session):
+def getAthlete(aid, session, state, school):
     athleteResults = s.get("https://www.athletic.net/TrackAndField/Athlete.aspx?AID=" + aid).text
     #athleteResults = open('Athlete.aspx', 'r')
     page = BeautifulSoup(athleteResults, features='html.parser')
@@ -94,7 +94,8 @@ def getAthlete(aid, session):
                         #print(rowData)
                         resultForm['event'] = event
 
-
+                        resultForm['state'] = state
+                        resultform['region'] = region
                         if rowcounter==1:
                             result = rowData
                             if "SR" in result:
@@ -146,6 +147,8 @@ def getAthlete(aid, session):
 
     for results in mainForm['results']:
         print(results)
+
+    return mainForm
     #print(spacer)
                 #time = resultsObject.find_all(style="width:60px")
 
@@ -156,10 +159,10 @@ def getAthlete(aid, session):
 
         #print(season.prettify())
 
+'''
 s = login()
 getAthlete('8564040', s)
 
-'''
 results example
 
 results = {
