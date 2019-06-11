@@ -1,6 +1,7 @@
 import requests
 from bs4 import BeautifulSoup
-
+import datetime
+from time import strptime
 def login():
 
     s = requests.Session()
@@ -35,11 +36,15 @@ def getAthlete(aid, session):
     #athleteResults = open('Athlete.aspx', 'r')
     page = BeautifulSoup(athleteResults, features='html.parser')
     #print(page.prettify())
-    mainForm = {'name':'', 'results':[]}
+    mainForm = {'name':'','gender':'', 'results':[]}
     name = str(page.find(property="og:title")["content"])
 
     mainForm['name'] = name
-    print(mainForm)
+
+    mainForm['gender'] = page.find("img", height="20px")['src'][23]
+
+
+    #print(mainForm)
 
     print('Scraping ' + name + "'s profile")
 
@@ -50,50 +55,93 @@ def getAthlete(aid, session):
 
         #figure out year for later
         year = season['uib-collapse'][7:11]
-        print(year)
-
+        #print(year)
+        #print(season.prettify())
+        gradeLevel = season.parent.find("span", class_="float-right").text
+        #print(gradeLevel)
         eventData = season.find_all("h5")
-
+        eventLists = season.find_all(class_="table table-sm table-responsive table-hover")
         #print(eventData)
+
+
+
         for events in eventData:
             event = events.text
 
             #not include relays cause to complicated
             if "Relay" in event:
-                print('Found relay ' + event + '....skipping')
+                #print(3Found relay ' + event + '....skipping')
                 continue
             else:
-                print(event)
+                #print(event)
+                #print("____________________________________________")
 
-                resultsObject = season.find_all("tr")
+                #resultsObject = season.find_all("tr")
 
-                for results in resultsObject:
-                    resultForm = {'date':'', 'meet':'', 'event':'', 'result':''}
+                resultObject = events.next_sibling
+                #print(resultObject)
 
+                for results in resultObject.find_all("tr"):
+                    resultForm = {'date':'', 'meet':'', 'event':'', 'result':'', 'gradeLevel':''}
+                    resultForm['gradeLevel'] = gradeLevel
+                    #print(spacer)
                     rowcounter = 0
 
                     for rows in results.find_all("td"):
+
                         rowData = rows.text
+
                         #print(rowData)
                         resultForm['event'] = event
-                        if rowcounter == 1:
-                            result = rowData
 
-                            #print('time: ' + result)
-                            resultForm['result'] = result
+
+                        if rowcounter==1:
+                            result = rowData
+                            if "SR" in result:
+                                #print(result)
+                                resultForm['result'] = rowData[:-2]
+                                #print('Fixed')
+                                #print('time: ' + resultForm['result'])
+                            if "PR" in result:
+                                #print(result)
+                                resultForm['result'] = rowData[:-2]
+                                #print('Fixed')
+                                #print('time: ' + resultForm['result'])
+                            else:
+                                resultForm['result'] = rowData
+                                #print('Didn"t fix')
+
 
                         elif rowcounter == 2:
                             date = rowData
-                            fullDate = date + ' ' + year
-                            resultForm['date'] = fullDate
+
+                            month = date[0:3]
+                            numMonth = strptime(month, '%b').tm_mon
+                            print(numMonth)
+
+                            day = (date.replace(month, "").replace(" ", ""))
+                            if len(day) == 1:
+                                "0" + day
+
+                            officialDate = year + '-' + month + "-" + day
+                            print(officialDate)
+
+                            resultForm['date'] = officialDate
                             #print('date: ' + fullDate)
 
                         elif rowcounter == 3:
                             resultForm['meet'] = rowData
                             #print('meetname: ' + rowData)
+
                         rowcounter += 1
 
-            mainForm['results'].append(resultForm)
+
+                    if resultForm['result'] == 'DNS':
+                        continue
+                    else:
+                        mainForm['results'].append(resultForm)
+                    print(spacer)
+
     #print(mainForm)'
 
     for results in mainForm['results']:
@@ -109,7 +157,7 @@ def getAthlete(aid, session):
         #print(season.prettify())
 
 s = login()
-getAthlete('8647967', s)
+getAthlete('8564040', s)
 
 '''
 results example
