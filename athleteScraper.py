@@ -31,124 +31,133 @@ def login():
 
 spacer = '================================================================================='
 
-def getAthlete(aid, session, state, school):
-    athleteResults = s.get("https://www.athletic.net/TrackAndField/Athlete.aspx?AID=" + aid).text
+def getAthlete(aid, session):
+    athleteResults = session.get("https://www.athletic.net/TrackAndField/Athlete.aspx?AID=" + aid).text
     #athleteResults = open('Athlete.aspx', 'r')
     page = BeautifulSoup(athleteResults, features='html.parser')
     #print(page.prettify())
     mainForm = {'name':'','gender':'', 'results':[]}
-    name = str(page.find(property="og:title")["content"])
 
-    mainForm['name'] = name
+    try:
+        name = str(page.find(property="og:title")["content"])
 
-    mainForm['gender'] = page.find("img", height="20px")['src'][23]
+        mainForm['name'] = name
 
+        mainForm['gender'] = page.find("img", height="20px")['src'][23]
 
-    #print(mainForm)
+        state = page.find("title").text[:-22].replace(name, "")[-2:]
+        #print(state)
+        #print(mainForm)
 
-    print('Scraping ' + name + "'s profile")
+        print('Scraping ' + name + "'s profile")
 
-    data = page.find(class_="col-md-7 pull-md-5 col-xl-8 pull-xl-4 col-print-7 athleteResults")
+        data = page.find(class_="col-md-7 pull-md-5 col-xl-8 pull-xl-4 col-print-7 athleteResults")
 
-    seasonObject = data.find_all(class_='card-block px-2 pt-2 pb-0')
-    for season in seasonObject:
+        seasonObject = data.find_all(class_='card-block px-2 pt-2 pb-0')
+        for season in seasonObject:
 
-        #figure out year for later
-        year = season['uib-collapse'][7:11]
-        #print(year)
-        #print(season.prettify())
-        gradeLevel = season.parent.find("span", class_="float-right").text
-        #print(gradeLevel)
-        eventData = season.find_all("h5")
-        eventLists = season.find_all(class_="table table-sm table-responsive table-hover")
-        #print(eventData)
+            #figure out year for later
+            year = season['uib-collapse'][7:11]
+            #print(year)
+            #print(season.prettify())
+            gradeLevel = season.parent.find("span", class_="float-right").text
+            #print(gradeLevel)
+            eventData = season.find_all("h5")
+            eventLists = season.find_all(class_="table table-sm table-responsive table-hover")
+            #print(eventData)
 
+            for events in eventData:
+                event = events.text
 
+                #not include relays cause to complicated
+                if "Relay" in event:
+                    #print(3Found relay ' + event + '....skipping')
+                    continue
+                else:
+                    #print(event)
+                    #print("____________________________________________")
 
-        for events in eventData:
-            event = events.text
+                    #resultsObject = season.find_all("tr")
 
-            #not include relays cause to complicated
-            if "Relay" in event:
-                #print(3Found relay ' + event + '....skipping')
-                continue
-            else:
-                #print(event)
-                #print("____________________________________________")
+                    resultObject = events.next_sibling
+                    #print(resultObject)
 
-                #resultsObject = season.find_all("tr")
+                    for results in resultObject.find_all("tr"):
+                        resultForm = {'date':'', 'meet':'', 'event':'', 'result':'', 'gradeLevel':''}
+                        resultForm['gradeLevel'] = gradeLevel
+                        #print(spacer)
+                        rowcounter = 0
 
-                resultObject = events.next_sibling
-                #print(resultObject)
+                        for rows in results.find_all("td"):
 
-                for results in resultObject.find_all("tr"):
-                    resultForm = {'date':'', 'meet':'', 'event':'', 'result':'', 'gradeLevel':''}
-                    resultForm['gradeLevel'] = gradeLevel
-                    #print(spacer)
-                    rowcounter = 0
+                            rowData = rows.text
 
-                    for rows in results.find_all("td"):
+                            #print(rowData)
+                            resultForm['event'] = event
 
-                        rowData = rows.text
+                            resultForm['state'] = state
+                            #resultForm['school'] = school
 
-                        #print(rowData)
-                        resultForm['event'] = event
+                            #resultform['region'] = region
+                            if rowcounter==1:
+                                result = rowData
+                                if "SR" in result:
+                                    #print(result)
+                                    resultForm['result'] = rowData[:-2]
+                                    if "(" in result:
+                                        resultForm['result'] = rowData[:-6]
+                                    #print('Fixed')
+                                    #print('time: ' + resultForm['result'])
+                                if "PR" in result:
+                                    #print(result)
+                                    resultForm['result'] = rowData[:-2]
+                                    if "(" in result:
+                                        resultForm['result'] = rowData[:-6]
+                                    #print('Fixed')
+                                    #print('time: ' + resultForm['result'])
 
-                        resultForm['state'] = state
-                        resultform['region'] = region
-                        if rowcounter==1:
-                            result = rowData
-                            if "SR" in result:
-                                #print(result)
-                                resultForm['result'] = rowData[:-2]
-                                #print('Fixed')
-                                #print('time: ' + resultForm['result'])
-                            if "PR" in result:
-                                #print(result)
-                                resultForm['result'] = rowData[:-2]
-                                #print('Fixed')
-                                #print('time: ' + resultForm['result'])
-                            else:
-                                resultForm['result'] = rowData
-                                #print('Didn"t fix')
-
-
-                        elif rowcounter == 2:
-                            date = rowData
-
-                            month = date[0:3]
-                            numMonth = strptime(month, '%b').tm_mon
-                            print(numMonth)
-
-                            day = (date.replace(month, "").replace(" ", ""))
-                            if len(day) == 1:
-                                "0" + day
-
-                            officialDate = year + '-' + month + "-" + day
-                            print(officialDate)
-
-                            resultForm['date'] = officialDate
-                            #print('date: ' + fullDate)
-
-                        elif rowcounter == 3:
-                            resultForm['meet'] = rowData
-                            #print('meetname: ' + rowData)
-
-                        rowcounter += 1
+                                #check if 100 meters
 
 
-                    if resultForm['result'] == 'DNS':
-                        continue
-                    else:
-                        mainForm['results'].append(resultForm)
-                    print(spacer)
+                                else:
+                                    resultForm['result'] = rowData
+                                    #print('Didn"t fix')
 
-    #print(mainForm)'
+                            elif rowcounter == 2:
+                                date = rowData
 
-    for results in mainForm['results']:
-        print(results)
+                                month = date[0:3]
+                                numMonth = strptime(month, '%b').tm_mon
+                                #print(numMonth)
 
-    return mainForm
+                                day = (date.replace(month, "").replace(" ", ""))
+                                if len(day) == 1:
+                                    "0" + day
+
+                                officialDate = year + '-' + month + "-" + day
+                                #print(officialDate)
+
+                                resultForm['date'] = officialDate
+                                #print('date: ' + fullDate)
+
+                            elif rowcounter == 3:
+                                resultForm['meet'] = rowData
+                                #print('meetname: ' + rowData)
+
+                            rowcounter += 1
+
+
+                        if resultForm['result'] == 'DNS':
+                            continue
+                        else:
+                            mainForm['results'].append(resultForm)
+                        #print(spacer)
+
+        #print(mainForm)'
+
+        return mainForm
+    except:
+        return "error"
     #print(spacer)
                 #time = resultsObject.find_all(style="width:60px")
 

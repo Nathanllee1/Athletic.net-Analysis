@@ -60,10 +60,13 @@ for condensedColumn in page.find_all(class_='col-lg-2 col-md-3 col-xs-6 mBottom1
                 #print(generalList)
                 schoolID = generalList.replace("../School.aspx?SchoolID=", "")
                 print("Team " + schoolID)
-                schoolResult = BeautifulSoup(requests.get("https://www.athletic.net/TrackAndField/School.aspx?SchoolID=" + schoolID).text, features='html.parser')
+                #schoolResult = BeautifulSoup(requests.get("https://www.athletic.net/TrackAndField/School.aspx?SchoolID=" + schoolID).text, features='html.parser')
+                #tempResult = BeautifulSoup(requests.get("https://www.athletic.net/TrackAndField/School.aspx?SchoolID=).text, features='html.parser')
                 #print(schoolResult)
                 #schoolName = schoolResult.find("span", class_="truncate").text
                 #print(schoolName)
+
+
                 athleteList = []
                 while True:
                     currentYear = 2019
@@ -72,13 +75,17 @@ for condensedColumn in page.find_all(class_='col-lg-2 col-md-3 col-xs-6 mBottom1
                     try:
                         athleteListURL = "https://www.athletic.net/api/v1/tfTeam/GetAthletes?teamID="+ schoolID + "&seasonID=" + str(currentYear)
                         print(athleteListURL)
-                        currentAthleteList = response = requests.get(athleteListURL, headers=headers, cookies=cookies)
+                        currentAthleteList = requests.get(athleteListURL, headers=headers, cookies=cookies).text
+                        print(currentAthleteList)
+
+                        f = open("school.txt", "a")
+                        f.write(currentAthleteList)
 
                         for currentAthletes in athleteList:
                             if currentAthletes not in athleteList:
                                 print("Found athlete" + currentAthletes)
                                 athleteList.append(currentAthletes)
-                        currentYear - 1
+                        currentYear += -1
                     except requests.HTTPError:
                         False
 
@@ -86,11 +93,6 @@ for condensedColumn in page.find_all(class_='col-lg-2 col-md-3 col-xs-6 mBottom1
                     athleteResult = getAthlete(athletes['ID'], s, regionURL[:-1], schoolID)
                     for results in athleteResult['results']:
                         grandResults.append(results)
-
-
-
-
-
 
 #print (regionList)
 
