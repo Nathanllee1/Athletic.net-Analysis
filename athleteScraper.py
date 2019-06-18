@@ -1,6 +1,7 @@
 import requests
 from bs4 import BeautifulSoup
 import datetime
+import re
 from time import strptime
 def login():
 
@@ -102,23 +103,34 @@ def getAthlete(aid, session, mode):
                             if rowcounter==1:
                                 result = rowData
                                 if "SR" in result:
+                                    '''
                                     #print(result)
                                     resultForm['result'] = rowData[:-2]
                                     if "(" in result:
                                         resultForm['result'] = rowData[:-8]
                                     #print('Fixed')
                                     #print('time: ' + resultForm['result'])
-                                if "PR" in result:
-                                    #print(result)
-                                    resultForm['result'] = rowData[:-2]
+                                    '''
+                                    result.replace("SR", "")
                                     if "(" in result:
-                                        resultForm['result'] = rowData[:-8]
-                                    #print('Fixed')
-                                    #print('time: ' + resultForm['result'])
+                                        re.sub("[\(\[].*?[\)\]]", "", result) #regex delete everything iwth parenthesis
 
+                                if "PR" in result:
+                                    result.replace("PR", "")
+                                    if "(" in result:
+                                        re.sub("[\(\[].*?[\)\]]", "", result) #regex delete everything iwth parenthesis
+
+                                    '''
+                                    #print(result)
+                                    resultForm['result'] = rowData[:-2]
+                                    if "(" in result:
+                                        resultForm['result'] = rowData[:-8]
+                                    #print('Fixed')
+                                    #print('time: ' + resultForm['result'])
+                                    '''
                                 #check if 100 meters
                                 if "(" in result:
-                                    resultForm['result'] = rowData[:-6]
+                                    re.sub("[\(\[].*?[\)\]]", "", result) #regex delete everything iwth parenthesis
 
                                 else:
                                     resultForm['result'] = rowData
