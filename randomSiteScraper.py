@@ -1,26 +1,41 @@
 import random
 from athleteScraper import getAthlete, login
+
 s = login()
 
 athleteCount = 0
 resultCounter = 0
 
-dataDocument = open("data.txt", "w")
+numberDatabase = []
+'''
+filename = input("filename: ")
+limit = input("# of results: ")
 
-while True:
+dataDocument = open('data/' + filename, "w")
+'''
+limit = 20
+while resultCounter <= int(limit):
+    print(resultCounter)
     randAthleteNum = str(random.randint(1, 13131452))
+    if randAthleteNum not in numberDatabase:
+        numberDatabase.append(randAthleteNum)
 
+        athleteResult = getAthlete(randAthleteNum, s, "scrape")
 
-    try:
-        athleteResult = getAthlete(randAthleteNum, s)
+        #print(athleteResult)
+        athleteResultCounter = 0
 
-        for results in athleteResult["results"]:
+        for results in athleteResult:
             resultCounter += 1
-            dataDocument.write(str(results) + ", ")
 
+            athleteResultCounter +=1
+            print(str(results))
+            #dataDocument.write(str(results) + ", ")
+
+        print("Found " + str(athleteResultCounter) + "Results")
         athleteCount += 1
 
-        if resultCounter % 1000 == 1:
-            print(resultCounter)
-    except:
-        pass
+
+
+
+#dataDocument.close()

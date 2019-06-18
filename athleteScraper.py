@@ -31,7 +31,7 @@ def login():
 
 spacer = '================================================================================='
 
-def getAthlete(aid, session):
+def getAthlete(aid, session, mode):
     athleteResults = session.get("https://www.athletic.net/TrackAndField/Athlete.aspx?AID=" + aid).text
     #athleteResults = open('Athlete.aspx', 'r')
     page = BeautifulSoup(athleteResults, features='html.parser')
@@ -105,19 +105,20 @@ def getAthlete(aid, session):
                                     #print(result)
                                     resultForm['result'] = rowData[:-2]
                                     if "(" in result:
-                                        resultForm['result'] = rowData[:-6]
+                                        resultForm['result'] = rowData[:-8]
                                     #print('Fixed')
                                     #print('time: ' + resultForm['result'])
                                 if "PR" in result:
                                     #print(result)
                                     resultForm['result'] = rowData[:-2]
                                     if "(" in result:
-                                        resultForm['result'] = rowData[:-6]
+                                        resultForm['result'] = rowData[:-8]
                                     #print('Fixed')
                                     #print('time: ' + resultForm['result'])
 
                                 #check if 100 meters
-
+                                if "(" in result:
+                                    resultForm['result'] = rowData[:-6]
 
                                 else:
                                     resultForm['result'] = rowData
@@ -154,8 +155,10 @@ def getAthlete(aid, session):
                         #print(spacer)
 
         #print(mainForm)'
-
-        return mainForm
+        if mode == 'regular':
+            return mainForm
+        elif mode == 'scrape':
+            return mainForm['results']
     except:
         return "error"
     #print(spacer)
