@@ -50,7 +50,7 @@ def getAthlete(aid, session, mode):
         #print(state)
         #print(mainForm)
 
-        print('Scraping ' + name + "'s profile")
+        print('Scraping ' + name + "'s profile", end=" ")
 
         data = page.find(class_="col-md-7 pull-md-5 col-xl-8 pull-xl-4 col-print-7 athleteResults")
 

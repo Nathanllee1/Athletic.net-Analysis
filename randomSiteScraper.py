@@ -1,6 +1,6 @@
 import random
 from athleteScraper import getAthlete, login
-
+import pandas as pd
 s = login()
 
 athleteCount = 0
@@ -8,17 +8,16 @@ resultCounter = 0
 
 numberDatabase = []
 
-filename = input("filename: ")
+#filename = input("filename: ")
 #limit = input("# of results: ")
 
-dataDocument = open('data/' + filename, "w")
+#dataDocument = open('data/' + filename, "w")
 
 eventLexicon = {}
 
-
+allData = []
 
 while True:
-
     randAthleteNum = str(random.randint(1, 13131452))
     if randAthleteNum not in numberDatabase:
         numberDatabase.append(randAthleteNum)
@@ -32,7 +31,7 @@ while True:
 
                 athleteResultCounter +=1
                 #print(str(results))
-                dataDocument.write(str(results) + ", ")
+                allData.append(results)
 
 
                 event = results['event']
@@ -42,14 +41,15 @@ while True:
                 else:
                     eventLexicon[event] += 1
 
-        #print(str(athleteResultCounter) + " Results")
+            print(str(athleteResultCounter) + " Results")
         athleteCount += 1
 
-        if resultCounter % 400 == 0:
+        if athleteCount == 10:
             print(eventLexicon , end=" ")
             print(str(resultCounter) + " Results")
-            input = input("Continue? y/n")
+            input = input("Continue? y/n ")
             if input == 'y':
+                athleteCount = 0
                 continue
             else:
                 break
@@ -57,4 +57,4 @@ while True:
 
 print(eventLexicon)
 
-dataDocument.close()
+pd.DataFrame.from_dict(allData).to_csv("data.csv")
