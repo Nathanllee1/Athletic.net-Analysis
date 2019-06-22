@@ -1,5 +1,5 @@
 import random
-from athleteScraper import getAthlete, login
+from testathleteScraper import getAthlete, login
 import pandas as pd
 s = login()
 import pickle
@@ -27,33 +27,38 @@ while True:
     randAthleteNum = str(random.randint(1, 13131752))
     if randAthleteNum not in numberDatabase:
         numberDatabase.append(randAthleteNum)
-        print(randAthleteNum)
-        athleteResult = getAthlete(randAthleteNum, s, "scrape")
-        print(athleteResult)
+        #print(randAthleteNum)
+
+        #print(athleteResult)
         athleteResultCounter = 0
-        if athleteResult != 'error' and athleteResult != 'none':
 
-            for results in athleteResult:
+        try:
+            athleteResult = getAthlete(randAthleteNum, s, "scrape")
+            if athleteResult != 'error' and athleteResult != 'none':
 
-                resultCounter += 1
+                for results in athleteResult:
 
-                athleteResultCounter +=1
-                #print(str(results))
-                allData.append(results)
+                    resultCounter += 1
 
-                event = results['event']
-                lexicon(eventLexicon, event)
+                    athleteResultCounter +=1
+                    #print(str(results))
+                    allData.append(results)
 
-                state = results['state']
-                lexicon(stateLexicon, state)
-        else:
-            print('error')
+                    event = results['event']
+                    lexicon(eventLexicon, event)
 
-            print(str(athleteResultCounter) + " Results")
+                    state = results['state']
+                    lexicon(stateLexicon, state)
+            if athleteResultCounter != 0:
+                print(str(athleteResultCounter) + " Results")
+        except:
+            pass
+
+
         athleteCount += 1
-        if athleteCount % 499 == 0:
+        if athleteCount % 100 == 0:
             print(resultCounter)
-        if athleteCount % 500 == 0:
+        if athleteCount % 100000 == 0:
             print(eventLexicon , end=" ")
             print(str(resultCounter) + " Results")
             print(stateLexicon)
@@ -64,6 +69,8 @@ while True:
             else:
                 break
 
-pd.DataFrame.from_dict(allData).to_csv("data2.csv")
+
+userInput = input("filename: ")
+pd.DataFrame.from_dict(allData).to_csv("userInput")
 #numDoc = open('numbers.txt')
-pickle.dump(numberDatabase)
+pickle.dump(numberDatabase, open("numberDump", "wb"))
