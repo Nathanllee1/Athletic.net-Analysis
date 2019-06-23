@@ -10,7 +10,7 @@ import pandas as pd
 app = Flask(__name__, static_folder='../static/dist', template_folder='../static/public')
 
 s = login()
-database = pd.read_csv("data2.csv")
+database = pd.read_csv("database.csv")
 
 @app.route('/')
 def index():
@@ -26,7 +26,8 @@ def api():
 
     for results in athleteData['results']:
         filteredTable = Filter('requestForm', database)
-        
+
+
 
 if __name__ == '__main__':
     app.run()
