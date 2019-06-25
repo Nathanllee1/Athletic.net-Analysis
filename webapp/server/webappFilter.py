@@ -18,3 +18,15 @@ def Filter(requestForm, allData):
         print('filtering ' + requestForm["gender"])
         dataCopy = filterResults(requestForm["gender"], dataCopy, "gender")
     return dataCopy
+
+def percentile(filteredData, singleRequest):
+    resultList = filteredResults['splitTime'].values.tolist()
+    floatResults = []
+    for results in resultList:
+        try:
+            floatResults.append(float(results))
+        except:
+            continue
+
+    percentile = 100 - percentileofscore(floatResults, singleResult['result'])
+    return percentile
