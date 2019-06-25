@@ -106,6 +106,7 @@ def getAthlete(aid, session, mode):
                                 if "SR" in result:
                                     #print(result)
                                     resultForm['result'] = result.replace("SR", "")
+                                    #print(resultForm['result'])
                                     if "(" in result:
                                         resultForm['result'] = rowData[:-3]
                                     #print('Fixed')
@@ -153,6 +154,8 @@ def getAthlete(aid, session, mode):
 
 
         if mode == 'regular':
+            print('Scraped ' + name + "'s profile")
+            print(mainForm)
             return mainForm
         elif mode == 'scrape':
             if len(mainForm['results']) != 0:
