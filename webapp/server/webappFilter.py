@@ -58,7 +58,7 @@ def percentile(filteredData, singleRequest):
     resultList = noError['splitTime'].values.tolist()
     #print(resultList)
     floatResults = []
-    print(singleRequest)
+    #print(singleRequest)
     for results in resultList:
         try:
             #limFloat = "{0:.2f}".format(results)
@@ -68,10 +68,10 @@ def percentile(filteredData, singleRequest):
         except:
             #print('blah', end=' ')
             pass
-    print(len(floatResults))
+    dataSize = len(floatResults)
     formattedRaw = postCleaner(singleRequest['result'])
     formattedResult = percentileConverter(formattedRaw)
     #print(type(formattedResult))
     percentile = 100 - percentileofscore(floatResults, float(formattedResult))
-    print(percentile)
-    return percentile
+    #print(percentile)
+    return [percentile, dataSize]
