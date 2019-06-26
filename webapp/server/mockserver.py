@@ -14,7 +14,9 @@ def api(package):
 
     for results in athleteData['results']:
         if requestForm['grade'] == 'True':
-             requestForm['grade'] = results['gradeLevel']
+             requestForm['gradeLevel'] = results['gradeLevel']
+             print(results['gradeLevel'])
+             print('=================================')
         requestForm['event'] = results['event']
         print(requestForm)
         filteredTable = Filter(requestForm, database)
@@ -25,4 +27,4 @@ def api(package):
     return athleteData
 
 
-api({'aid':'8647967', 'form':{"state":"CA", "grade":"True", "gender":"m"}})
+api({'aid':'13940334', 'form':{"state":"", "grade":"True", "gender":"f"}})
