@@ -47,6 +47,8 @@ def percentileConverter(result):
     except ValueError:
         return "Error"
 
+
+
 def percentile(filteredData, singleRequest):
     noError = filteredData[filteredData.formattedResults != "Error"]
     #filteredData['']
