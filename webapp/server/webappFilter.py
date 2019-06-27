@@ -14,38 +14,43 @@ def Filter(requestForm, allData):
         #print('filtering ' + requestForm["state"])
         dataCopy = filterResults(requestForm["state"], dataCopy, "state")
 
-    if requestForm["grade"]:
+    if requestForm["gradeLevel"]:
         #print('filtering ' + requestForm["grade"])
-        dataCopy = filterResults(requestForm["grade"], dataCopy, "gradeLevel")
+        dataCopy = filterResults(requestForm["gradeLevel"], dataCopy, "gradeLevel")
     if requestForm["gender"]:
         #print('filtering ' + requestForm["gender"])
         dataCopy = filterResults(requestForm["gender"], dataCopy, "gender")
     return dataCopy
 
 def percentileConverter(result):
-    try:
-        result = str(result)
+    result = str(result)
 
-        if ':' in result:
-            splitResult = re.split(":", result)
+    if ':' in result:
+        splitResult = re.split(":", result)
 
-            if len(splitResult) == 1:
-                return float(splitResult)
-            if len(splitResult) == 2:
+        if len(splitResult) == 1:
+            return float(splitResult)
+        if len(splitResult) == 2:
 
-                return float(splitResult[0]) * 60 + float(splitResult[1])
-            if len(splitResult) == 3:
-                return float(splitResult[0]) * 60 + float(splitResult[1]) * 60 + float(splitResult[2])
-        if "'" in result:
-            splitDistance = re.split("'", result)
-            if len(splitDistance) == 1:
-                return float(splitDistance)
-            if len(splitDistance) == 2:
-                return float(splitDistance[0]) * 12 + float(splitDistance[1])
-        else:
-            return float(result)
-    except ValueError:
-        return "Error"
+            return float(splitResult[0]) * 60 + float(splitResult[1])
+        if len(splitResult) == 3:
+            return float(splitResult[0]) * 60 + float(splitResult[1]) * 60 + float(splitResult[2])
+    if "'" in result:
+        splitDistance = re.split("'", result)
+        if len(splitDistance) == 1:
+            return float(splitDistance)
+        if len(splitDistance) == 2:
+            return float(splitDistance[0]) * 12 + float(splitDistance[1])
+    else:
+        return float(result)
+
+def postCleaner(result):
+
+    result = result.replace("PR", "").replace("SR", "").replace("h", "0").replace("c", "")
+    if "(" in result and ")" not in result:
+        return result[:-4]
+    print(result)
+    return result
 
 
 
@@ -55,7 +60,7 @@ def percentile(filteredData, singleRequest):
     resultList = noError['splitTime'].values.tolist()
     #print(resultList)
     floatResults = []
-    print(singleRequest)
+    #print(singleRequest)
     for results in resultList:
         try:
             #limFloat = "{0:.2f}".format(results)
@@ -63,11 +68,12 @@ def percentile(filteredData, singleRequest):
             floatResult = float(results)
             floatResults.append(floatResult)
         except:
-            print('blah', end=' ')
+            #print('blah', end=' ')
             pass
-    print(floatResults)
-    formattedResult = percentileConverter(singleRequest['result'])
-    print(type(formattedResult))
+    dataSize = len(floatResults)
+    formattedRaw = postCleaner(singleRequest['result'])
+    formattedResult = percentileConverter(formattedRaw)
+    #print(type(formattedResult))
     percentile = 100 - percentileofscore(floatResults, float(formattedResult))
-    print(percentile)
-    return percentile
+    #print(percentile)
+    return [percentile, dataSize]
