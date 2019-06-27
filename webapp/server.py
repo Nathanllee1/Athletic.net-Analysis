@@ -7,7 +7,7 @@ from webappFilter import Filter, percentile
 
 import pandas as pd
 
-app = Flask(__name__, static_folder='../static/public/dist', template_folder='../static/public')
+app = Flask(__name__)
 
 s = login()
 database = pd.read_csv("database.csv")
