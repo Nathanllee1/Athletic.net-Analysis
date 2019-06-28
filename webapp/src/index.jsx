@@ -1,11 +1,12 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 
+import AIDForm from './form.jsx'
 
 class App extends React.Component {
     render() {
         return (
-            <div>My Flask React App!</div>
+            <AIDForm />
         );
     }
 }
