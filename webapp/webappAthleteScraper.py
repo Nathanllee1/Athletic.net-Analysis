@@ -155,7 +155,7 @@ def getAthlete(aid, session, mode):
 
         if mode == 'regular':
             print('Scraped ' + name + "'s profile")
-            print(mainForm)
+            #print(mainForm)
             return mainForm
         elif mode == 'scrape':
             if len(mainForm['results']) != 0:

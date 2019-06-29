@@ -49,7 +49,7 @@ def postCleaner(result):
     result = result.replace("PR", "").replace("SR", "").replace("h", "0").replace("c", "")
     if "(" in result and ")" not in result:
         return result[:-4]
-    print(result)
+    #print(result)
     return result
 
 

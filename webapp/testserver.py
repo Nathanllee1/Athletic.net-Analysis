@@ -7,8 +7,6 @@ from webappFilter import Filter, percentile
 
 import pandas as pd
 
-app = Flask(__name__)
-
 s = login()
 database = pd.read_csv("database.csv")
 print('Loaded database')
@@ -34,21 +32,17 @@ def getPercentile(package):
 
     return athleteData
 
-
-@app.route('/')
 def index():
     return render_template('index.html')
 
-@app.route('/api/graph')
 def graph():
     package = request.get_json()
     data = getPercentile(package)
 
 
-@app.route('/api/cards')
-def cards():
-    package = request.get_json()
-    data = getPercentile(package)
+def cards(testRequest):
+
+    data = getPercentile(testRequest)
 
     cardFormat = {}
 
@@ -63,8 +57,6 @@ def cards():
             print('added')
     print(cardFormat)
 
-if __name__ == '__main__':
-    app.run()
-
 
 testRequest = {'aid':'13940334', 'form':{"state":"", "grade":"True", "gender":"f"}}
+cards(testRequest)
