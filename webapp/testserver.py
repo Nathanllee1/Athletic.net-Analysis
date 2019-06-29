@@ -39,6 +39,17 @@ def graph():
     package = request.get_json()
     data = getPercentile(package)
 
+    chartSet = {'label':'', 'data':[]}
+
+
+
+    for results in data['results']:
+        event = results['event']
+        print(event)
+        if event not in cardFormat:
+            cardFormat.update({event : [results]})
+        else:
+            cardFormat[event].append(results)
 
 def cards(testRequest):
 
@@ -51,10 +62,8 @@ def cards(testRequest):
         print(event)
         if event not in cardFormat:
             cardFormat.update({event : [results]})
-            print('new')
         else:
             cardFormat[event].append(results)
-            print('added')
     print(cardFormat)
 
 

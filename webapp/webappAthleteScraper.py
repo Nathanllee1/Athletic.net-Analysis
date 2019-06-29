@@ -2,6 +2,11 @@ import requests
 from bs4 import BeautifulSoup
 import datetime
 from time import strptime
+
+import traceback
+
+
+
 def login():
 
     s = requests.Session()
@@ -59,7 +64,16 @@ def getAthlete(aid, session, mode):
 
             #figure out year for later
             year = season['uib-collapse'][7:11]
-            #print(year)
+
+            if year[0] == '1':
+                seasonType = 'Indoor'
+                print('Indoor')
+                year = season['uib-collapse'][8:12]
+            if year[0] == '2':
+                seasonType = 'Outdoor'
+
+
+            seasonName = year + ' ' + seasonType + ' Season'
             #print(season.prettify())
             gradeLevel = season.parent.find("span", class_="float-right").text
             #print(gradeLevel)
@@ -84,8 +98,12 @@ def getAthlete(aid, session, mode):
                     #print(resultObject)
 
                     for results in resultObject.find_all("tr"):
-                        resultForm = {'date':'', 'meet':'', 'event':'', 'result':'', 'gradeLevel':''}
+                        resultForm = {'date':'', 'meet':'', 'event':'', 'result':'', 'gradeLevel':'', 'season':''}
                         resultForm['gradeLevel'] = gradeLevel
+                        resultForm['event'] = event
+                        resultForm['gender'] = gender
+                        resultForm['state'] = state
+                        resultForm['season'] = seasonName
                         #print(spacer)
                         rowcounter = 0
 
@@ -93,11 +111,9 @@ def getAthlete(aid, session, mode):
 
                             rowData = rows.text
 
-                            #print(rowData)
-                            resultForm['event'] = event
-                            resultForm['gender'] = gender
-                            resultForm['state'] = state
                             resultForm['aid'] = aid
+                            #print(rowData)
+
                             #resultForm['school'] = school
 
                             #resultform['region'] = region
@@ -161,5 +177,10 @@ def getAthlete(aid, session, mode):
             if len(mainForm['results']) != 0:
                 print('Scraped ' + name + "'s profile", end=" ")
             return mainForm['results']
-    except:
-        return "error"
+    except Exception:
+        traceback.print_exc()
+
+'''
+s = login()
+print(getAthlete('6942069', s, 'regular'))
+'''
