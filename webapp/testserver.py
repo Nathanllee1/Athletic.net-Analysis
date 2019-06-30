@@ -41,15 +41,21 @@ def graph():
 
     chartSet = {'label':'', 'data':[]}
 
-
+    graphFormat = {}
 
     for results in data['results']:
         event = results['event']
         print(event)
-        if event not in cardFormat:
-            cardFormat.update({event : [results]})
+        if event not in graphFormat:
+            graphFormat.update({event : [results]})
         else:
-            cardFormat[event].append(results)
+            graphFormat[event].append(results)
+
+    dataList = []
+    for event, data in graphFormat.items():
+
+
+
 
 def cards(testRequest):
 
