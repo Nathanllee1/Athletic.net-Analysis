@@ -35,12 +35,12 @@ def getPercentile(package):
 def index():
     return render_template('index.html')
 
-def graph():
-    package = request.get_json()
+def graph(package):
+    #package = request.get_json()
     data = getPercentile(package)
 
-    chartSet = {'label':'', 'data':[]}
-
+    #all data = {labelset: []}
+    datasets = []
     graphFormat = {}
 
     for results in data['results']:
@@ -50,12 +50,28 @@ def graph():
             graphFormat.update({event : [results]})
         else:
             graphFormat[event].append(results)
+    labels = []
+    dataList = {'labels':'', 'datasets':''}
 
-    dataList = []
     for event, data in graphFormat.items():
+        chartSet = {'label':'', 'data':[]}
+        chartSet['label'] = event
 
+        for eventData in data:
+            individualData = {'x':'', 'y':''}
+            individualData['x'] = eventData['date']
+            individualData['y'] = eventData['percentile']
 
+            chartSet['data'].append(individualData)
+            '''
+            labelObject = {'meet':eventData['meet'], 'event':eventData['event'], 'result':eventData['result'], 'season':eventData['season']}
+            labels.
+            '''
+        datasets.append(chartSet)
 
+    dataList['labels'] = labels
+    dataList['datasets'] = datasets
+    return dataList
 
 def cards(testRequest):
 
@@ -74,4 +90,4 @@ def cards(testRequest):
 
 
 testRequest = {'aid':'13940334', 'form':{"state":"", "grade":"True", "gender":"f"}}
-cards(testRequest)
+print(graph(testRequest))

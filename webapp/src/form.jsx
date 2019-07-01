@@ -22,9 +22,9 @@ class AIDForm extends React.Component {
   render() {
     return (
       <form onSubmit={this.handleSubmit}>
-        <div class='form-group'>
+        <div class_='form-group'>
           <input type='number' value={this.state.value} onChange={this.handleChange} class='form-control' placeholder='Enter Athletic.net ID #'></input>
-          <button class="btn btn-primary" type="submit" value="Submit">Submit</button>
+          <button class_="btn btn-primary" type="submit" value="Submit">Submit</button>
         </div>
       </form>
     )
