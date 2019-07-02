@@ -67,7 +67,7 @@ def getAthlete(aid, session, mode):
 
             if year[0] == '1':
                 seasonType = 'Indoor'
-                print('Indoor')
+                #print('Indoor')
                 year = season['uib-collapse'][8:12]
             if year[0] == '2':
                 seasonType = 'Outdoor'

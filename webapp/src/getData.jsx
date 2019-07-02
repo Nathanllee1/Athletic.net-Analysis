@@ -6,12 +6,12 @@ class getData extends React.Component {
     this.state = {
       error: null,
       isLoaded: false,
-      items: []
+      items: ''
     };
   }
 
   componentDidMount() {
-    fetch("/api", {aid: , form: })
+    fetch("/api/" +  props.component, props.package)
       .then(res => res.json())
       .then(
         (result) => {
@@ -20,7 +20,7 @@ class getData extends React.Component {
             items: result.items
           });
         },
-        // Note: it's important to handle errors here
+        // Note: it's important to handle errors herehttps://www.pornhub.com/
         // instead of a catch() block so that we don't swallow
         // exceptions from actual bugs in components.
         (error) => {
@@ -40,14 +40,10 @@ class getData extends React.Component {
       return <div>Loading...</div>;
     } else {
       return (
-        <ul>
-          {items.map(item => (
-            <li key={item.name}>
-              {item.name} {item.price}
-            </li>
-          ))}
-        </ul>
+        item
       );
     }
   }
 }
+
+export default getData

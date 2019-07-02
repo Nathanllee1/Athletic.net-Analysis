@@ -1,7 +1,19 @@
-module.exports = {
+var ExtractTextPlugin = require('extract-text-webpack-plugin');
+const webpack = require('webpack');
+
+
+
+const config = {
     entry: [
         './src/index.jsx'
     ],
+    resolve: {
+       extensions: [".js", ".jsx", ".css"]
+    },
+    output: {
+        path: __dirname + '/static',
+        filename: 'bundle.js'
+    },
     module: {
         rules: [
             {
@@ -18,11 +30,10 @@ module.exports = {
             },
         ]
     },
-    output: {
-        path: __dirname + '/static',
-        filename: 'bundle.js'
-    },
+
     plugins: [
-        new ExtractTextPlugin('styles.css'),
+        new ExtractTextPlugin('index.css'),
     ]
 };
+
+module.exports = config;
