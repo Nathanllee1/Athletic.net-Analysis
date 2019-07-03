@@ -1,13 +1,13 @@
-import React import "react"
+import React from "react"
 
-class Cards extends React.Component {
-  constructor(props) {
-    super(props)
-  }
+export class Cards extends React.Component {
 
+  //const data = this.props
   render() {
     return (
-      //map function
+      data.this.props.data(cardObject =>
+        <h1>{cardObject}</h1>
+      )
     )
   }
 }

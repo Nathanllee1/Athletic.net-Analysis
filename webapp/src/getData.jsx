@@ -20,8 +20,7 @@ class getData extends React.Component {
             items: result.items
           });
         },
-        // Note: it's important to handle errors herehttps://www.pornhub.com/
-        // instead of a catch() block so that we don't swallow
+        // Note: it's important to handle errors here
         // exceptions from actual bugs in components.
         (error) => {
           this.setState({
