@@ -8,7 +8,8 @@ class AIDForm extends React.Component {
     this.state = {
       aid: '',
       status: '',
-      form: {aid:'', form:{"state":"", "grade":"True", "gender":'z   '}}
+      form: {aid:'', form:{"state":"", "grade":"True", "gender":'z   '}},
+      results: '',
     };
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
@@ -36,7 +37,7 @@ class AIDForm extends React.Component {
     alert('Aid submitted # ' + this.state.value);
     event.preventDefault();
     cardData = get_data(this.state.value, this.state.form,'card')
-    return <Cards data={cardData} />
+    this.setState({results: cardData})
   }
 
   render() {
