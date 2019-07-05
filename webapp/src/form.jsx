@@ -6,9 +6,9 @@ class AIDForm extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
-      aid: '',
+      value: '',
       status: '',
-      form: {aid:'', form:{"state":"", "grade":"True", "gender":'z   '}},
+      form: {aid:'', form:{"state":"", "grade":"True", "gender":''}},
       results: '',
     };
     this.handleChange = this.handleChange.bind(this);
@@ -37,8 +37,10 @@ class AIDForm extends React.Component {
     alert('Aid submitted # ' + this.state.value);
     event.preventDefault();
     cardData = get_data(this.state.value, this.state.form,'card')
-    this.setState({results: cardData})
+    console.log(cardData)
+    this.setState({results: cardData, status: 'rendered'})
   }
+
 
   render() {
     return (
