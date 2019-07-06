@@ -1,6 +1,6 @@
-import React from 'react';
-import Cards from './cards';
+import React from 'react'
 import { connect } from 'react-redux'
+
 
 class AIDForm extends React.Component {
   constructor(props) {
@@ -19,28 +19,13 @@ class AIDForm extends React.Component {
     this.setState({value: event.target.value});
   };
 
-  get_data(athleticID, _package, endpoint) {
-    fetch("/api/" +  endpoint, _package)
-      .then(res => res.json())
-      .then(
-        (result) => {
-          return result
-        },
-
-        (error) => {
-          return 'error'
-        }
-      )
-  }
 
   handleSubmit(event) {
     alert('Aid submitted # ' + this.state.value);
     event.preventDefault();
-    cardData = get_data(this.state.value, this.state.form,'card')
-    console.log(cardData)
-    this.setState({results: cardData, status: 'rendered'})
-  }
+    this.props.dispatch({ type: })
 
+  }
 
   render() {
     return (
@@ -57,9 +42,9 @@ class AIDForm extends React.Component {
 
 function mapStateToProps(state) {
   return {
-    count: state.count
+    aid: state.aid
   };
 }
 
 
-export default connect(mapStateToProps)(AIDForm);
+export default connect(mapStateToProps)(Counter);
