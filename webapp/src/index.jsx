@@ -1,10 +1,11 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
-import AIDForm from './form.jsx'
+import AIDForm from './AIDForm.jsx'
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { createStore } from 'redux';
 import { Provider } from 'react-redux'
+import { reducer as formReducer } from 'redux-form'
 
 const initialState = {
   form: {aid:'', form:{"state":"", "grade":"True", "gender":''}},

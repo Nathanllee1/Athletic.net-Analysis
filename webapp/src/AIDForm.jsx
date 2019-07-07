@@ -23,7 +23,7 @@ class AIDForm extends React.Component {
   handleSubmit(event) {
     alert('Aid submitted # ' + this.state.value);
     event.preventDefault();
-    this.props.dispatch({ type: })
+    //this.props.dispatch({ type: })
 
   }
 
@@ -47,4 +47,4 @@ function mapStateToProps(state) {
 }
 
 
-export default connect(mapStateToProps)(Counter);
+export default connect(mapStateToProps)(AIDForm);
