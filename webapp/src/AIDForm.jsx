@@ -1,6 +1,6 @@
-import React from 'react'
-import { connect } from 'react-redux'
-
+import React from 'react';
+import { connect } from 'react-redux';
+import { reduxForm, Field } from 'redux-form';
 
 class AIDForm extends React.Component {
   constructor(props) {

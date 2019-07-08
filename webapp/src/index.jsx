@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom';
 import './index.css';
 import AIDForm from './AIDForm.jsx'
 import 'bootstrap/dist/css/bootstrap.min.css';
-import { createStore } from 'redux';
+import { createStore, combineReducers } from 'redux';
 import { Provider } from 'react-redux'
 import { reducer as formReducer } from 'redux-form'
 
@@ -15,8 +15,6 @@ const initialState = {
 }
 
 // status: initialpageload, loading, loaded
-
-
 function reducer(state = initialState, action) {
   switch(action.type) {
     case 'ENTERAID': {
@@ -40,8 +38,12 @@ function reducer(state = initialState, action) {
   return state;
 }
 
+const rootReducer = combineReducers({
+  reducer,
+  form: formReducer
+})
 
-const store = createStore(reducer);
+const store = createStore(rootReducer);
 
 class App extends React.Component {
     render() {
