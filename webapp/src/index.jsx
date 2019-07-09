@@ -39,21 +39,26 @@ function reducer(state = initialState, action) {
 }
 
 const rootReducer = combineReducers({
-  reducer,
+  //reducer,
   form: formReducer
 })
 
 const store = createStore(rootReducer);
 
 class App extends React.Component {
-    render() {
-        return (
-          <Provider store={store}>
-            <AIDForm />
-          </Provider>
 
-        );
-    }
+  submit(values) {
+    console.log(values)
+  }
+
+  render() {
+      return (
+        <Provider store={store}>
+          <AIDForm onSubmit={this.submit}/>
+        </Provider>
+
+      );
+  }
 }
 
 ReactDOM.render(<App />, document.getElementById('app'));
