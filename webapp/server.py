@@ -1,5 +1,5 @@
 import random
-from flask import Flask, render_template
+from flask import Flask, render_template, request
 import json
 
 from webappAthleteScraper import getAthlete, login
@@ -42,6 +42,7 @@ def index():
 @app.route('/api/graph')
 def graph():
     package = request.get_json()
+    print(package)
     data = getPercentile(package)
 
     #all data = {labelset: []}

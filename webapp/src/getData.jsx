@@ -1,4 +1,4 @@
-get_data(athleticID, _package, endpoint) {
+function get_data(athleticID, _package, endpoint) {
   fetch("/api/" +  endpoint, _package)
     .then(res => res.json())
     .then(

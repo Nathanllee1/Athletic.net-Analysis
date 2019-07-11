@@ -12,7 +12,7 @@ const AIDForm = props => {
    const { handleSubmit, pristine, reset, submitting } = props;
   return (
     <form onSubmit={ handleSubmit } className="form">
-      <Field name='aid' component="input" name="Aid" type="text" placeholder='Enter Athletic.net ID #' />
+      <Field name='aid' component="input" name="Aid" type="number" placeholder='Enter Athletic.net ID #' />
       <button type="submit">Submit</button>
     </form>
   )

@@ -7,6 +7,23 @@ import { createStore, combineReducers } from 'redux';
 import { Provider } from 'react-redux'
 import { reducer as formReducer } from 'redux-form'
 
+function get_data(athleticID, _package, endpoint) {
+  console.log(_package);
+  console.log(endpoint);
+  fetch("/api/" +  endpoint, _package)
+    .then(res => res.json())
+    .then(
+      (result) => {
+        return result
+      },
+
+      (error) => {
+        return 'error'
+      }
+    )
+}
+
+
 const initialState = {
   form: {aid:'', form:{"state":"", "grade":"True", "gender":''}},
   cardResults: '',
@@ -17,13 +34,9 @@ const initialState = {
 // status: initialpageload, loading, loaded
 function reducer(state = initialState, action) {
   switch(action.type) {
-    case 'ENTERAID': {
-      const aid = action.text
-      console.log($(aid))
-      return {
-        ...state,
-        aid
-      }
+    case 'SUBMITAID': {
+      const data = action.data;
+      console.log('Yeet $(data)')
     }
 
     case 'RECIEVE_DATA': {
@@ -31,7 +44,7 @@ function reducer(state = initialState, action) {
       console.log(data);
       return {
         ...state,
-        quotes
+        data
       }
     }
   }
@@ -40,12 +53,13 @@ function reducer(state = initialState, action) {
 
 function onSubmit(value) {
   console.log(value)
+  console.log(get_data(value, initialState.form, 'cards'))
+  //store.dispatch()
+
 }
 
-
-
 const rootReducer = combineReducers({
-  //reducer,
+  reducer,
   form: formReducer
 })
 
@@ -62,5 +76,12 @@ class App extends React.Component {
       );
   }
 }
+/*
+function mapStateToProps(state) {
+  return {
+    form: state
+  }
+}
+*/
 
 ReactDOM.render(<App />, document.getElementById('app'));
