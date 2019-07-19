@@ -16,6 +16,7 @@ class AIDForm extends React.Component {
   }
 
   handleChange(event) {
+    console.log(event.target.value)
     this.setState({value: event.target.value});
   };
 
@@ -34,11 +35,16 @@ class AIDForm extends React.Component {
   }
 
   handleSubmit(event) {
+    console.log('submitted')
+    /*
     alert('Aid submitted # ' + this.state.value);
     event.preventDefault();
+    this.setState({form.aid : this.state.value})
+    console.log(this.state.form)
     cardData = get_data(this.state.value, this.state.form,'card')
     console.log(cardData)
     this.setState({results: cardData, status: 'rendered'})
+    */
   }
 
 

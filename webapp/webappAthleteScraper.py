@@ -86,7 +86,7 @@ def getAthlete(aid, session, mode):
 
                 #not include relays cause to complicated
                 if "Relay" in event:
-                    #print(3Found relay ' + event + '....skipping')
+                    #print(Found relay ' + event + '....skipping')
                     continue
                 else:
                     #print(event)

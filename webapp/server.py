@@ -99,7 +99,7 @@ def cards():
     print(cardFormat)
 
 if __name__ == '__main__':
-    app.run()
+    app.run(host='0.0.0.0')
 
 
 testRequest = {'aid':'13940334', 'form':{"state":"", "grade":"True", "gender":"f"}}

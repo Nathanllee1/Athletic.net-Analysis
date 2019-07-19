@@ -53,9 +53,10 @@ function reducer(state = initialState, action) {
 
 function onSubmit(value) {
   console.log(value)
-  console.log(get_data(value, initialState.form, 'cards'))
+  const form = initialStae.form;
+  console.log(form)
+  console.log(get_data(value, form, 'cards'))
   //store.dispatch()
-
 }
 
 const rootReducer = combineReducers({
