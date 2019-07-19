@@ -1,24 +1,15 @@
 import React from 'react';
-import { connect } from 'react-redux';
-import { reduxForm, Field } from 'redux-form';
-import PropTypes from 'prop-types';
 
+class AIDForm extends React.Component {
 
-function onSubmit(value) {
-  console.log(value)
+  render() {
+    return (
+      <form onSubmit={ this.props.onSubmit } className="form">
+        <input name='aid' type="number" placeholder='Enter Athletic.net ID #' onChange={this.props.onChange}/>
+        <button type="submit">Submit</button>
+      </form>
+    )
+  }
 }
 
-const AIDForm = props => {
-   const { handleSubmit, pristine, reset, submitting } = props;
-  return (
-    <form onSubmit={ handleSubmit } className="form">
-      <Field name='aid' component="input" name="Aid" type="number" placeholder='Enter Athletic.net ID #' />
-      <button type="submit">Submit</button>
-    </form>
-  )
-}
-
-
-export default reduxForm({
-  form: 'AID_Form',
-})(AIDForm);
+export default AIDForm;
