@@ -80,23 +80,28 @@ def graph():
     return dataList
 
 
-@app.route('/api/cards')
+@app.route('/api/cards', methods=["POST"])
 def cards():
-    package = request.get_json()
-    data = getPercentile(package)
+    if request.method=="POST":
 
-    cardFormat = {}
+        package = request.get_json()
+        print(package)
+        data = getPercentile(package)
 
-    for results in data['results']:
-        event = results['event']
-        print(event)
-        if event not in cardFormat:
-            cardFormat.update({event : [results]})
-            print('new')
-        else:
-            cardFormat[event].append(results)
-            print('added')
-    print(cardFormat)
+        cardFormat = {}
+
+        for results in data['results']:
+            event = results['event']
+            print(event)
+            if event not in cardFormat:
+                cardFormat.update({event : [results]})
+                print('new')
+            else:
+                cardFormat[event].append(results)
+                print('added')
+        print(cardFormat)
+    else:
+        return('no')
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0')

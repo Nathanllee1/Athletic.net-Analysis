@@ -9,34 +9,24 @@ class App extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
-      form: {aid:'', form:{"state":"", "grade":"True", "gender":''}},
       cardResults: '',
       graphResults: '',
       status: 'initialpageload',
-      aid: ''
+      aid: '',
+      state_: '',
+      grade: 'True',
+      gender: ''
     };
     this.onSubmit = this.onSubmit.bind(this);
     this.onChange = this.onChange.bind(this);
+    this.getData = this.getData.bind(this);
   }
 
-  onSubmit(value) {
-    value.preventDefault()
-
-  }
-  ///////////////////////////////////////////////////////////Fix this
-  onChange(event) {
-    this.setState(prevState =>({
-      ...prevState.form,
-      [aid] : event.target.value
-
-    });
-  }
-  ///////////////////////////////////////////////////////////////
-  get_data(athleticID, _package, endpoint) {
+  getData(_package, endpoint) {
     console.log(_package);
     console.log(endpoint);
-    /*
-    fetch("/api/" +  endpoint, _package)
+    //const package = "/api/" + endpoint
+    fetch("/api/cards", {method: 'post', body: '_package'})
       .then(res => res.json())
       .then(
         (result) => {
@@ -47,8 +37,27 @@ class App extends React.Component {
           return 'error'
         }
       )
-      */
   }
+
+  onSubmit(value) {
+    value.preventDefault()
+    const submitForm = {
+      aid: this.state.aid,
+      form: {
+        state_: this.state.state_,
+        grade: this.state.grade,
+        gender: this.state.gender
+      }
+    }
+    const cardData = this.getData(submitForm, 'cards')
+    console.log(cardData)
+  }
+  ///////////////////////////////////////////////////////////Fix this
+  onChange(event) {
+    this.setState({aid : event.target.value})
+  }
+  ///////////////////////////////////////////////////////////////
+
 
 
   render() {
