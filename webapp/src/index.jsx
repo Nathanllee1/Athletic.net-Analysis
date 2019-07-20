@@ -13,34 +13,44 @@ class App extends React.Component {
       graphResults: '',
       status: 'initialpageload',
       aid: '',
+
       state_: '',
+      stateStatus: 'True',
+
       grade: 'True',
-      gender: ''
+
+      gender: '',
+      genderStatus: 'True'
     };
     this.onSubmit = this.onSubmit.bind(this);
     this.onChange = this.onChange.bind(this);
     this.getData = this.getData.bind(this);
   }
 
-  getData(_package, endpoint) {
-    console.log(_package);
-    console.log(endpoint);
-    //const package = "/api/" + endpoint
-    fetch("/api/cards", {method: 'post', body: '_package'})
-      .then(res => res.json())
-      .then(
-        (result) => {
-          return result
-        },
+  getData() {
+    const _package = this.state
 
-        (error) => {
-          return 'error'
-        }
-      )
+    //const package = "/api/" + endpoint
+    fetch(("/api/"), {
+      method: 'post',
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(_package)
+
+      })
+      .then(function (response) {
+        return response.json()
+      })
+      .then(function (json) {
+        console.log(json)
+      });
   }
 
   onSubmit(value) {
     value.preventDefault()
+    /*
     const submitForm = {
       aid: this.state.aid,
       form: {
@@ -49,14 +59,14 @@ class App extends React.Component {
         gender: this.state.gender
       }
     }
-    const cardData = this.getData(submitForm, 'cards')
+    */
+    const cardData = this.getData()
     console.log(cardData)
   }
-  ///////////////////////////////////////////////////////////Fix this
+
   onChange(event) {
     this.setState({aid : event.target.value})
   }
-  ///////////////////////////////////////////////////////////////
 
 
 

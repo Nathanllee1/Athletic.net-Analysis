@@ -1,5 +1,5 @@
 import random
-from flask import Flask, render_template, request
+from flask import Flask, render_template, request, jsonify
 import json
 
 from webappAthleteScraper import getAthlete, login
@@ -17,16 +17,16 @@ def getPercentile(package):
     aid = package['aid']
     #print(aid)
     athleteData = getAthlete(aid, s, 'regular')
-    requestForm = package['form']
+
 
     for results in athleteData['results']:
-        if requestForm['grade'] == 'True':
-             requestForm['gradeLevel'] = results['gradeLevel']
+        if package['grade'] == 'True':
+             package['gradeLevel'] = results['gradeLevel']
              #print(results['gradeLevel'])
              #print('=================================')
-        requestForm['event'] = results['event']
+        package['event'] = results['event']
         #print(requestForm)
-        filteredTable = Filter(requestForm, database)
+        filteredTable = Filter(package, database)
         #print(filteredTable)
         updatedAthleteData = percentile(filteredTable, results)
         results['percentile'] = updatedAthleteData[0]
@@ -34,14 +34,7 @@ def getPercentile(package):
 
     return athleteData
 
-
-@app.route('/')
-def index():
-    return render_template('index.html')
-
-@app.route('/api/graph')
-def graph():
-    package = request.get_json()
+def graph(package):
     print(package)
     data = getPercentile(package)
 
@@ -59,7 +52,7 @@ def graph():
     labels = []
     dataList = {'labels':'', 'datasets':''}
 
-    for event, data in graphFormat.items():
+    for event, data in graphFormaeventt.items():
         chartSet = {'label':'', 'data':[]}
         chartSet['label'] = event
 
@@ -79,29 +72,34 @@ def graph():
     dataList['datasets'] = datasets
     return dataList
 
-
-@app.route('/api/cards', methods=["POST"])
 def cards():
+    package = request.get_json()
+    print(package)
+    data = getPercentile(package)
+
+    cardFormat = {}
+
+    for results in data['results']:
+        event = results['event']
+        #print(event)
+        if event not in cardFormat:
+            cardFormat.update({event : [results]})
+            #print('new')
+        else:
+            cardFormat[event].append(results)
+            #print('added')
+    return(jsonify(cardFormat))
+
+@app.route('/')
+def index():
+    return render_template('index.html')
+
+@app.route('/api/', methods=['POST', 'GET'])
+def api():
     if request.method=="POST":
+        state = request.get_json()
+        
 
-        package = request.get_json()
-        print(package)
-        data = getPercentile(package)
-
-        cardFormat = {}
-
-        for results in data['results']:
-            event = results['event']
-            print(event)
-            if event not in cardFormat:
-                cardFormat.update({event : [results]})
-                print('new')
-            else:
-                cardFormat[event].append(results)
-                print('added')
-        print(cardFormat)
-    else:
-        return('no')
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0')

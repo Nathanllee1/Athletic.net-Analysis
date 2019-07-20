@@ -7,23 +7,23 @@ def filterResults(requestVariable, allData, column):
     filter_ = allData[column]==requestVariable
     return allData[filter_]
 
-def Filter(requestForm, allData):
+def Filter(package, allData):
     dataCopy = filterResults(requestForm["event"], allData, "event")
 
-    if requestForm["state"]:
+    if package["stateStatus"] == 'True':
         #print('filtering ' + requestForm["state"])
         dataCopy = filterResults(requestForm["state"], dataCopy, "state")
 
-    if requestForm["gradeLevel"]:
+    if package["gradeLevel"]:
         #print('filtering ' + requestForm["grade"])
         dataCopy = filterResults(requestForm["gradeLevel"], dataCopy, "gradeLevel")
-    if requestForm["gender"]:
+    if package["genderStatus"] == 'True':
         #print('filtering ' + requestForm["gender"])
         dataCopy = filterResults(requestForm["gender"], dataCopy, "gender")
     return dataCopy
 
 def percentileConverter(result):
-    result = str(result)
+    result = postCleaner(str(result))
 
     if ':' in result:
         splitResult = re.split(":", result)
@@ -46,7 +46,7 @@ def percentileConverter(result):
 
 def postCleaner(result):
 
-    result = result.replace("PR", "").replace("SR", "").replace("h", "0").replace("c", "")
+    result = result.replace("PR", "").replace("SR", "").replace("h", "0").replace("c", "").replace("m", "")
     if "(" in result and ")" not in result:
         return result[:-4]
     #print(result)
