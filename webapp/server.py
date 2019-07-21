@@ -42,7 +42,7 @@ def graph(package):
     datasets = []
     graphFormat = {}
 
-    for results in data['results']:
+    for results in data['results']:package = request.get_json()
         event = results['event']
         print(event)
         if event not in graphFormat:
@@ -60,7 +60,7 @@ def graph(package):
             individualData = {'x':'', 'y':''}
             individualData['x'] = eventData['date']
             individualData['y'] = eventData['percentile']
-
+package = request.get_json()
             chartSet['data'].append(individualData)
             '''
             labelObject = {'meet':eventData['meet'], 'event':eventData['event'], 'result':eventData['result'], 'season':eventData['season']}
@@ -72,8 +72,7 @@ def graph(package):
     dataList['datasets'] = datasets
     return dataList
 
-def cards():
-    package = request.get_json()
+def cards(package):
     print(package)
     data = getPercentile(package)
 
@@ -98,7 +97,10 @@ def index():
 def api():
     if request.method=="POST":
         state = request.get_json()
-        
+        state.cardResults = cards(state)
+        state.graphResults = graph(state)
+
+        return state
 
 
 if __name__ == '__main__':
