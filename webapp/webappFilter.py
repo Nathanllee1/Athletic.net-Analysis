@@ -8,18 +8,18 @@ def filterResults(requestVariable, allData, column):
     return allData[filter_]
 
 def Filter(package, allData):
-    dataCopy = filterResults(requestForm["event"], allData, "event")
-
+    dataCopy = filterResults(package["event"], allData, "event")
+    print(package)
     if package["stateStatus"] == 'True':
-        #print('filtering ' + requestForm["state"])
-        dataCopy = filterResults(requestForm["state"], dataCopy, "state")
+        print('filtering ' + package["state_"])
+        dataCopy = filterResults(package["state_"], dataCopy, "state")
 
     if package["gradeLevel"]:
-        #print('filtering ' + requestForm["grade"])
-        dataCopy = filterResults(requestForm["gradeLevel"], dataCopy, "gradeLevel")
+        print('filtering ' + package["grade"])
+        dataCopy = filterResults(package["gradeLevel"], dataCopy, "gradeLevel")
     if package["genderStatus"] == 'True':
-        #print('filtering ' + requestForm["gender"])
-        dataCopy = filterResults(requestForm["gender"], dataCopy, "gender")
+        print('filtering ' + package["gender"])
+        dataCopy = filterResults(package["gender"], dataCopy, "gender")
     return dataCopy
 
 def percentileConverter(result):
@@ -45,7 +45,6 @@ def percentileConverter(result):
         return float(result)
 
 def postCleaner(result):
-
     result = result.replace("PR", "").replace("SR", "").replace("h", "0").replace("c", "").replace("m", "")
     if "(" in result and ")" not in result:
         return result[:-4]

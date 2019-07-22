@@ -15,7 +15,7 @@ print('Loaded database')
 
 def getPercentile(package):
     aid = package['aid']
-    #print(aid)
+    print(aid)
     athleteData = getAthlete(aid, s, 'regular')
 
 
@@ -42,9 +42,9 @@ def graph(package):
     datasets = []
     graphFormat = {}
 
-    for results in data['results']:package = request.get_json()
+    for results in data['results']:
         event = results['event']
-        print(event)
+        #print(event)
         if event not in graphFormat:
             graphFormat.update({event : [results]})
         else:
@@ -52,7 +52,7 @@ def graph(package):
     labels = []
     dataList = {'labels':'', 'datasets':''}
 
-    for event, data in graphFormaeventt.items():
+    for event, data in graphFormat.items():
         chartSet = {'label':'', 'data':[]}
         chartSet['label'] = event
 
@@ -60,7 +60,6 @@ def graph(package):
             individualData = {'x':'', 'y':''}
             individualData['x'] = eventData['date']
             individualData['y'] = eventData['percentile']
-package = request.get_json()
             chartSet['data'].append(individualData)
             '''
             labelObject = {'meet':eventData['meet'], 'event':eventData['event'], 'result':eventData['result'], 'season':eventData['season']}
@@ -73,7 +72,7 @@ package = request.get_json()
     return dataList
 
 def cards(package):
-    print(package)
+    #print(package)
     data = getPercentile(package)
 
     cardFormat = {}
@@ -87,7 +86,7 @@ def cards(package):
         else:
             cardFormat[event].append(results)
             #print('added')
-    return(jsonify(cardFormat))
+    return(cardFormat)
 
 @app.route('/')
 def index():
@@ -97,14 +96,15 @@ def index():
 def api():
     if request.method=="POST":
         state = request.get_json()
-        state.cardResults = cards(state)
-        state.graphResults = graph(state)
+        print(state)
+        state["cardResults"] = cards(state)
+        state["graphResults"] = graph(state)
 
-        return state
+        return jsonify(state)
 
 
 if __name__ == '__main__':
-    app.run(host='0.0.0.0')
+    app.run(host='0.0.0.0', debug=True)
 
 
 testRequest = {'aid':'13940334', 'form':{"state":"", "grade":"True", "gender":"f"}}
