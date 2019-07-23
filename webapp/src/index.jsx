@@ -3,11 +3,14 @@ import ReactDOM from 'react-dom';
 import './index.css';
 import AIDForm from './AIDForm.jsx'
 import 'bootstrap/dist/css/bootstrap.min.css';
+import VisualForm from './visualForm'
+
+
 
 class App extends React.Component {
 
   constructor(props) {
-    super(props)
+    super(props);
     this.state = {
       cardResults: '',
       graphResults: '',
@@ -20,7 +23,9 @@ class App extends React.Component {
       grade: 'True',
 
       gender: '',
-      genderStatus: 'True'
+      genderStatus: 'True',
+
+      name: '',
     };
     this.onSubmit = this.onSubmit.bind(this);
     this.onChange = this.onChange.bind(this);
@@ -28,7 +33,7 @@ class App extends React.Component {
   }
 
   getData() {
-    const _package = this.state
+    const _package = this.state;
 
     //const package = "/api/" + endpoint
     fetch(("/api/"), {
@@ -49,7 +54,7 @@ class App extends React.Component {
   }
 
   onSubmit(value) {
-    value.preventDefault()
+    value.preventDefault();
     /*
     const submitForm = {
       aid: this.state.aid,
@@ -60,21 +65,28 @@ class App extends React.Component {
       }
     }
     */
-    const cardData = this.getData()
+    const cardData = this.getData();
     console.log(cardData)
-  }
+  };
 
   onChange(event) {
     this.setState({aid : event.target.value})
-  }
+  };
+
 
 
 
   render() {
-      return (
-          <AIDForm onSubmit={this.onSubmit} onChange={this.onChange} />
-      );
+    return (
+      <div>
+        <AIDForm onSubmit={this.onSubmit} onChange={this.onChange} />
+        <VisualForm state_={this.state.state_} gender={this.state.gender} name={this.state.name} />
+      </div>
+
+    )
   }
+
+
 }
 
 ReactDOM.render(<App />, document.getElementById('app'));

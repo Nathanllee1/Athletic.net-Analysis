@@ -9,16 +9,18 @@ def filterResults(requestVariable, allData, column):
 
 def Filter(package, allData):
     dataCopy = filterResults(package["event"], allData, "event")
-    print(package)
+
+    #print(dataCopy)
+    #print(package)
     if package["stateStatus"] == 'True':
-        print('filtering ' + package["state_"])
+        #print('filtering ' + package["state_"])
         dataCopy = filterResults(package["state_"], dataCopy, "state")
 
-    if package["gradeLevel"]:
-        print('filtering ' + package["grade"])
+    if package["gradeLevel"] == "True":
+        #print('filtering ' + package["grade"])
         dataCopy = filterResults(package["gradeLevel"], dataCopy, "gradeLevel")
     if package["genderStatus"] == 'True':
-        print('filtering ' + package["gender"])
+        #print('filtering ' + package["gender"])
         dataCopy = filterResults(package["gender"], dataCopy, "gender")
     return dataCopy
 
@@ -54,6 +56,7 @@ def postCleaner(result):
 
 
 def percentile(filteredData, singleRequest):
+    print(filteredData)
     noError = filteredData[filteredData.formattedResults != "Error"]
     #filteredData['']
     resultList = noError['splitTime'].values.tolist()
@@ -63,7 +66,6 @@ def percentile(filteredData, singleRequest):
     for results in resultList:
         try:
             #limFloat = "{0:.2f}".format(results)
-
             floatResult = float(results)
             floatResults.append(floatResult)
         except:
@@ -74,5 +76,5 @@ def percentile(filteredData, singleRequest):
     formattedResult = percentileConverter(formattedRaw)
     #print(type(formattedResult))
     percentile = 100 - percentileofscore(floatResults, float(formattedResult))
-    #print(percentile)
+    print(percentile)
     return [percentile, dataSize]

@@ -14,11 +14,15 @@ database = pd.read_csv("database.csv")
 print('Loaded database')
 
 def getPercentile(package):
+    #print(package)
     aid = package['aid']
-    print(aid)
+    #print(aid)
+    #TODO
+    getAthlete isn't passing to other functotn sproperly
+    ###################################################################################
+
     athleteData = getAthlete(aid, s, 'regular')
-
-
+    print(athleteData)
     for results in athleteData['results']:
         if package['grade'] == 'True':
              package['gradeLevel'] = results['gradeLevel']
@@ -26,17 +30,18 @@ def getPercentile(package):
              #print('=================================')
         package['event'] = results['event']
         #print(requestForm)
+        print(package)
         filteredTable = Filter(package, database)
-        #print(filteredTable)
+
         updatedAthleteData = percentile(filteredTable, results)
         results['percentile'] = updatedAthleteData[0]
         results['dataSize'] = updatedAthleteData[1]
 
     return athleteData
 
-def graph(package):
-    print(package)
-    data = getPercentile(package)
+def graph(data):
+    #print(package)
+
 
     #all data = {labelset: []}
     datasets = []
@@ -71,10 +76,8 @@ def graph(package):
     dataList['datasets'] = datasets
     return dataList
 
-def cards(package):
+def cards(data):
     #print(package)
-    data = getPercentile(package)
-
     cardFormat = {}
 
     for results in data['results']:
@@ -96,9 +99,10 @@ def index():
 def api():
     if request.method=="POST":
         state = request.get_json()
-        print(state)
-        state["cardResults"] = cards(state)
-        state["graphResults"] = graph(state)
+        #print(state)
+        data = getPercentile(state)
+        state["cardResults"] = cards(data)
+        state["graphResults"] = graph(data)
 
         return jsonify(state)
 
