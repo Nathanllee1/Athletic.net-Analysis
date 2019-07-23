@@ -7,21 +7,22 @@ def filterResults(requestVariable, allData, column):
     filter_ = allData[column]==requestVariable
     return allData[filter_]
 
-def Filter(package, allData):
-    dataCopy = filterResults(package["event"], allData, "event")
+def Filter(result, allData, stateStatus, gradeLevel, genderStatus):
+    #print(result)
+    dataCopy = filterResults(result["event"], allData, "event")
 
     #print(dataCopy)
     #print(package)
-    if package["stateStatus"] == 'True':
+    if stateStatus == 'True':
         #print('filtering ' + package["state_"])
-        dataCopy = filterResults(package["state_"], dataCopy, "state")
+        dataCopy = filterResults(result["state"], dataCopy, "state")
 
-    if package["gradeLevel"] == "True":
+    if gradeLevel == "True":
         #print('filtering ' + package["grade"])
-        dataCopy = filterResults(package["gradeLevel"], dataCopy, "gradeLevel")
-    if package["genderStatus"] == 'True':
+        dataCopy = filterResults(result["gradeLevel"], dataCopy, "gradeLevel")
+    if genderStatus == 'True':
         #print('filtering ' + package["gender"])
-        dataCopy = filterResults(package["gender"], dataCopy, "gender")
+        dataCopy = filterResults(result["gender"], dataCopy, "gender")
     return dataCopy
 
 def percentileConverter(result):
@@ -56,7 +57,7 @@ def postCleaner(result):
 
 
 def percentile(filteredData, singleRequest):
-    print(filteredData)
+    #print(filteredData)
     noError = filteredData[filteredData.formattedResults != "Error"]
     #filteredData['']
     resultList = noError['splitTime'].values.tolist()
@@ -76,5 +77,5 @@ def percentile(filteredData, singleRequest):
     formattedResult = percentileConverter(formattedRaw)
     #print(type(formattedResult))
     percentile = 100 - percentileofscore(floatResults, float(formattedResult))
-    print(percentile)
+    #rint(percentile)
     return [percentile, dataSize]
