@@ -2,6 +2,9 @@ import random
 from flask import Flask, render_template
 import json
 
+
+
+
 from webappAthleteScraper import getAthlete, login
 from webappFilter import Filter, percentile
 
