@@ -1,1 +1,1 @@
-web: gunicorn server:athleticScraper
+web: gunicorn server:create_app()
