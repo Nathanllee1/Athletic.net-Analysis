@@ -2,9 +2,19 @@ import React from 'react';
 
 class VisualForm extends React.Component {
   render() {
+
+    var gender;
+    if (this.props.gender == 'm') {
+      gender = 'Males'
+    } else {
+      gender = 'Females'
+    }
+
+
+
     return(
       <div className="VisualForm">
-        How does {this.props.name} stack up against {this.props.gender}s in {this.props.state_} in the same Grade?
+        How does <b>{this.props.name}</b> stack up against <b>{gender}</b> in <b>{this.props.state_}</b> in the same <b>Age</b>?
       </div>
     )
   }

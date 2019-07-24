@@ -4,6 +4,7 @@ import './index.css';
 import AIDForm from './AIDForm.jsx'
 import 'bootstrap/dist/css/bootstrap.min.css';
 import VisualForm from './visualForm'
+import Cards from './cards';
 
 
 
@@ -18,7 +19,7 @@ class App extends React.Component {
       aid: '',
 
       state_: '',
-      stateStatus: 'True',
+      stateStatus: 'False',
 
       grade: 'True',
 
@@ -30,6 +31,7 @@ class App extends React.Component {
     this.onSubmit = this.onSubmit.bind(this);
     this.onChange = this.onChange.bind(this);
     this.getData = this.getData.bind(this);
+
   }
 
   getData() {
@@ -48,27 +50,22 @@ class App extends React.Component {
       .then(function (response) {
         return response.json()
       })
-      .then(function (json) {
-        console.log(json)
-      });
+      .then((json) =>
+        this.setState(json)
+      );
   }
 
   onSubmit(value) {
     value.preventDefault();
-    /*
-    const submitForm = {
-      aid: this.state.aid,
-      form: {
-        state_: this.state.state_,
-        grade: this.state.grade,
-        gender: this.state.gender
-      }
-    }
-    */
+    console.log('submitted')
     this.setState({ status:"loading" });
-    const cardData = this.getData();
+    const data = this.getData();
+
+    //console.log(data);
+    this.setState({data});
+    //this.state = data
     this.setState({ status:"loaded" });
-    console.log(cardData)
+
   };
 
   onChange(event) {
@@ -79,13 +76,20 @@ class App extends React.Component {
 
 
   render() {
-    return (
-      <div>
+    if(this.state.status == 'initialpageload') {
+      return  (
         <AIDForm onSubmit={this.onSubmit} onChange={this.onChange} />
-        <VisualForm state_={this.state.state_} gender={this.state.gender} name={this.state.name} />
-      </div>
+      )
+    } else {
+      return (
+        <div>
+          <AIDForm onSubmit={this.onSubmit} onChange={this.onChange} />
+          <VisualForm state_={this.state.state_} gender={this.state.gender} name={this.state.name} />
+          <Cards data={this.state.cardData}/>
+        </div>
+      )
+    }
 
-    )
   }
 
 

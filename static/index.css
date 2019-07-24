@@ -1,5 +1,17 @@
-input: {
+
+
+.VisualForm {
+  font-size: 50px;
+}
+
+#aidform {
   width: 300px;
+
+}
+
+form {
+  display: flex;
+  justify-content: center;
 }
 /*!
  * Bootstrap v4.3.1 (https://getbootstrap.com/)
