@@ -65,9 +65,9 @@ class App extends React.Component {
       }
     }
     */
-    this.setState({ status:loading });
+    this.setState({ status:"loading" });
     const cardData = this.getData();
-    this.setState({ status:loaded });
+    this.setState({ status:"loaded" });
     console.log(cardData)
   };
 
