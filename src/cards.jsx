@@ -6,9 +6,11 @@ class Cards extends React.Component {
   render() {
     const cardData = this.props.data;
     return(
-        cardData.map(event =>
-          <Card event={event} />
-        )
+        {cardData.map(event =>
+          <div className="card">
+            <h5 className="card">event.event</h5>
+          </div>
+        )}
     )
   }
 }
