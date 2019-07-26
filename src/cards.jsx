@@ -5,12 +5,13 @@ import Card from './card';
 class Cards extends React.Component {
   render() {
     const cardData = this.props.data;
+    console.log(cardData)
     return(
-        {cardData.map(event =>
+        cardData.map((event) =>
           <div className="card">
             <h5 className="card">event.event</h5>
           </div>
-        )}
+        )
     )
   }
 }

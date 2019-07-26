@@ -4,7 +4,7 @@ import './index.css';
 import AIDForm from './AIDForm.jsx'
 import 'bootstrap/dist/css/bootstrap.min.css';
 import VisualForm from './visualForm'
-import Cards from './cards';
+//import Cards from './cards';
 
 
 
@@ -19,7 +19,7 @@ class App extends React.Component {
       aid: '',
 
       state_: '',
-      stateStatus: 'False',
+      stateStatus: 'True',
 
       grade: 'True',
 
@@ -52,6 +52,7 @@ class App extends React.Component {
       })
       .then((json) =>
         this.setState(json)
+
       );
   }
 
@@ -62,7 +63,7 @@ class App extends React.Component {
     const data = this.getData();
 
     //console.log(data);
-    this.setState({data});
+    //this.setState({data});
     //this.state = data
     this.setState({ status:"loaded" });
 
@@ -76,16 +77,18 @@ class App extends React.Component {
 
 
   render() {
-    if(this.state.status == 'initialpageload') {
+    if(this.state.results) {
       return  (
-        <AIDForm onSubmit={this.onSubmit} onChange={this.onChange} />
+        <div>
+          <AIDForm onSubmit={this.onSubmit} onChange={this.onChange} />
+          <VisualForm state_={this.state.state_} gender={this.state.gender} name={this.state.name} />
+        </div>
+
       )
     } else {
       return (
         <div>
           <AIDForm onSubmit={this.onSubmit} onChange={this.onChange} />
-          <VisualForm state_={this.state.state_} gender={this.state.gender} name={this.state.name} />
-          <Cards data={this.state.cardData}/>
         </div>
       )
     }
@@ -96,3 +99,4 @@ class App extends React.Component {
 }
 
 ReactDOM.render(<App />, document.getElementById('app'));
+//<Cards data={this.state.cardData}/>
