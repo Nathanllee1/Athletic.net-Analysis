@@ -1,11 +1,11 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
+
 import AIDForm from './AIDForm.jsx'
 import 'bootstrap/dist/css/bootstrap.min.css';
 import VisualForm from './visualForm'
-//import Cards from './cards';
-
+import Cards from './cards';
 
 
 class App extends React.Component {
@@ -82,6 +82,7 @@ class App extends React.Component {
         <div>
           <AIDForm onSubmit={this.onSubmit} onChange={this.onChange} />
           <VisualForm state_={this.state.state_} gender={this.state.gender} name={this.state.name} />
+          <Cards data={this.state.cardData}/>
         </div>
 
       )

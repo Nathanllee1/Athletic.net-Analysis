@@ -9,7 +9,7 @@ class Cards extends React.Component {
     return(
         cardData.map((event) =>
           <div className="card">
-            <h5 className="card">event.event</h5>
+            <h5 className="card">cardData.event</h5>
           </div>
         )
     )
