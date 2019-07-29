@@ -45,9 +45,8 @@ class App extends React.Component {
         'Content-Type': 'application/json'
       },
       body: JSON.stringify(_package)
-
       })
-      .then(function (response) {
+      .then(function(response) {
         return response.json()
       })
       .then((json) =>
@@ -73,16 +72,14 @@ class App extends React.Component {
     this.setState({aid : event.target.value})
   };
 
-
-
-
   render() {
     if(this.state.results) {
+      console.log(this.state)
       return  (
         <div>
           <AIDForm onSubmit={this.onSubmit} onChange={this.onChange} />
           <VisualForm state_={this.state.state_} gender={this.state.gender} name={this.state.name} />
-          <Cards data={this.state.cardData}/>
+          <Cards data={this.state.cardResults}/>
         </div>
 
       )

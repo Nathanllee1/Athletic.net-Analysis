@@ -13,3 +13,7 @@ form {
   display: flex;
   justify-content: center;
 }
+
+Cards {
+  display: flex;
+}

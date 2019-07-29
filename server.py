@@ -48,6 +48,7 @@ def api():
         #print(state)
         data = getPercentile(state)
         state["cardResults"] = cards(data)
+        print(state["cardResults"])
         state["graphResults"] = graph(data)
 
         return jsonify(state)
