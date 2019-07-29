@@ -74,7 +74,7 @@ class App extends React.Component {
 
   render() {
     if(this.state.results) {
-      console.log(this.state)
+      //console.log(this.state)
       return  (
         <div>
           <AIDForm onSubmit={this.onSubmit} onChange={this.onChange} />

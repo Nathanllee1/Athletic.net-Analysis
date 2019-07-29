@@ -17,3 +17,7 @@ form {
 Cards {
   display: flex;
 }
+
+.card {
+  width: 200px;
+}
