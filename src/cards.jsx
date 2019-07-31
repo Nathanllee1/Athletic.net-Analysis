@@ -3,25 +3,27 @@ import Card from './card';
 
 
 class Cards extends React.Component {
-  render() {
+
+  function createCard() {
     const cardData = this.props.data;
     console.log(cardData)
+
+    
+
+
     var events;
     for (events in cardData ) {
       console.log(events)
       return(
         <div className="card" >
-          <h5 className="card-title">{events}</h5>
-            <table>
-
-
-            </table>
+          <h2 className="card-title"><b>{events}</b></h2>
         </div>
-
-
-
       )
     }
+  }
+
+  render() {
+    <div>{this.createCard}</div>
   }
 }
 
