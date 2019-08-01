@@ -3,27 +3,35 @@ import Card from './card';
 
 
 class Cards extends React.Component {
+  constructor(props) {
+    super(props)
+    this.createCard = this.createCard.bind(this)
+  }
 
-  function createCard() {
+  createCard() {
     const cardData = this.props.data;
     console.log(cardData)
 
-    
-
+    let cards = []
 
     var events;
     for (events in cardData ) {
       console.log(events)
-      return(
+      cards.push(
         <div className="card" >
           <h2 className="card-title"><b>{events}</b></h2>
         </div>
       )
     }
+    console.log(cards)
+    return cards
   }
 
   render() {
-    <div>{this.createCard}</div>
+    return(
+      <div>{this.createCard}</div>
+    )
+
   }
 }
 
