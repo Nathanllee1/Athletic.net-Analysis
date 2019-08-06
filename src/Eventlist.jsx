@@ -21,7 +21,7 @@ class EventList extends React.Component {
       )
     }
     return(
-      <table>
+      <table className="table table-hover">
         <tbody>
           <tr>
             <th>Meet</th>

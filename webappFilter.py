@@ -50,7 +50,7 @@ def percentileConverter(result):
 def postCleaner(result):
     result = result.replace("PR", "").replace("SR", "").replace("h", "0").replace("c", "").replace("m", "")
     if "(" in result and ")" not in result:
-        return result[:-4]
+        return result[:-5]
     #print(result)
     return result
 
@@ -63,7 +63,8 @@ def percentile(filteredData, singleRequest):
     resultList = noError['splitTime'].values.tolist()
     #print(resultList)
     floatResults = []
-    #print(singleRequest)
+    print()
+    print(singleRequest)
     for results in resultList:
         try:
             #limFloat = "{0:.2f}".format(results)
@@ -74,8 +75,10 @@ def percentile(filteredData, singleRequest):
             pass
     dataSize = len(floatResults)
     formattedRaw = postCleaner(singleRequest['result'])
+    print(formattedRaw)
     formattedResult = percentileConverter(formattedRaw)
     #print(type(formattedResult))
     percentile = 100 - percentileofscore(floatResults, float(formattedResult))
+
     #rint(percentile)
     return [percentile, dataSize]

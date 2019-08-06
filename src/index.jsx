@@ -79,9 +79,9 @@ class App extends React.Component {
         <div>
           <AIDForm onSubmit={this.onSubmit} onChange={this.onChange} />
           <VisualForm state_={this.state.state_} gender={this.state.gender} name={this.state.name} />
-          <div className='cards'>
-            <Cards data={this.state.cardResults}/>
-          </div>
+
+          <Cards data={this.state.cardResults}/>
+
 
         </div>
 

@@ -5,7 +5,7 @@ from time import strptime
 
 import traceback
 
-
+from webappFilter import postCleaner
 
 def login():
 
@@ -41,7 +41,7 @@ def getAthlete(aid, session, mode):
     #athleteResults = open('Athlete.aspx', 'r')
     page = BeautifulSoup(athleteResults, features='html.parser')
     #print(page.prettify())
-    mainForm = {'name':'','gender':'', 'results':[]}
+    mainForm = {'name':'','gender':'', 'state_':'', 'results':[]}
 
     try:
         name = str(page.find(property="og:title")["content"])
@@ -52,6 +52,7 @@ def getAthlete(aid, session, mode):
         mainForm['gender'] = gender
 
         state = page.find("title").text[:-22].replace(name, "")[-2:]
+        mainForm['state_'] = state
         #print(state)
         #print(mainForm)
 
@@ -138,6 +139,9 @@ def getAthlete(aid, session, mode):
                                 else:
                                     resultForm['result'] = rowData
                                     #print('Didn"t fix')
+                                #result = postCleaner(rowData)
+
+                                #print('Didn"t fix')
 
                             elif rowcounter == 2:
                                 date = rowData

@@ -19,11 +19,12 @@ def getPercentile(package):
     #print(aid)
 
     athleteData = getAthlete(aid, s, 'regular')
+    print(athleteData)
     package['name'] = athleteData['name']
     package['gender'] = athleteData['gender']
 
     package['results'] = athleteData['results']
-
+    package['state_'] = athleteData['state_']
 
     for results in package['results']:
         '''
@@ -32,7 +33,7 @@ def getPercentile(package):
         '''
         filteredTable = Filter(results, database, package['stateStatus'], package['grade'], package['genderStatus'])
         updatedAthleteData = percentile(filteredTable, results)
-        results['percentile'] = updatedAthleteData[0]
+        results['percentile'] = str(updatedAthleteData[0]).split('.')[0] + '%'
         results['dataSize'] = updatedAthleteData[1]
 
     return package

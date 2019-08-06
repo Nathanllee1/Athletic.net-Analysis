@@ -2,15 +2,15 @@
 
 .VisualForm {
   font-size: 50px;
+  text-align: center;
 }
 
-#aidform {
-  width: 300px;
 
-}
 
 form {
-
+  margin: 15px;
+  height: 40px;
+  width: 300px;
 }
 
 .mainForm {
@@ -20,9 +20,14 @@ form {
 
 .cards {
   display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: flex-start;
 }
 
 .card {
   width: 800px;
   margin: 25px;
+  padding: 20px;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
 }
