@@ -6,6 +6,7 @@
 
 #aidform {
   width: 300px;
+
 }
 
 form {
@@ -17,12 +18,13 @@ form {
   justify-content: center;
 }
 
-Cards {
+.cards {
   display: flex;
 }
 
 .card {
-  width: 200px;
+  width: 800px;
+  margin: 25px;
 }
 /*!
  * Bootstrap v4.3.1 (https://getbootstrap.com/)

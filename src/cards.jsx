@@ -1,14 +1,11 @@
 import React from 'react';
 import Card from './card';
-
+import EventList from './Eventlist'
 
 class Cards extends React.Component {
-  constructor(props) {
-    super(props)
-    this.createCard = this.createCard.bind(this)
-  }
 
-  createCard() {
+
+  render() {
     const cardData = this.props.data;
     console.log(cardData)
 
@@ -17,19 +14,17 @@ class Cards extends React.Component {
     var events;
     for (events in cardData ) {
       console.log(events)
+      const eventResults = cardData[events]
       cards.push(
-        <div className="card" >
+        <div className="card" key={events}>
           <h2 className="card-title"><b>{events}</b></h2>
+          <EventList eventData={eventResults}/>
         </div>
       )
     }
-    console.log(cards)
-    return cards
-  }
 
-  render() {
     return(
-      <div>{this.createCard}</div>
+      <div>{cards}</div>
     )
 
   }
