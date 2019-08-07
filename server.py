@@ -13,6 +13,8 @@ s = login()
 database = pd.read_csv("database.csv")
 print('Loaded database')
 
+
+
 def getPercentile(package):
     #print(package)
     aid = package['aid']

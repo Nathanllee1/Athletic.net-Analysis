@@ -1,3 +1,7 @@
+from statistics import mean
+
+
+
 def graph(data):
     #print(package)
 
@@ -38,14 +42,27 @@ def graph(data):
 def cards(data):
     #print(package)
     cardFormat = {}
+    cardData = {'results':{}, 'averagePercent':''}
 
     for results in data['results']:
+
         event = results['event']
         #print(event)
         if event not in cardFormat:
-            cardFormat.update({event : [results]})
+            cardFormat.update({event : {'results':[results], 'averagePercent':'hee'}})
             #print('new')
         else:
-            cardFormat[event].append(results)
+            cardFormat[event]['results'].append(results)
             #print('added')
+
+    for events in cardFormat:
+        print(cardFormat[events])
+        resultpercentileList = []
+        for results in cardFormat[events]["results"]:
+            print(results)
+            resultpercentileList.append(float(results['percentile'].replace('%', '')))
+
+        percentile = mean(resultpercentileList)
+        cardFormat[events]['averagePercent'] = str(percentile).split(".")[0] + "%"
+        print(percentile)
     return(cardFormat)

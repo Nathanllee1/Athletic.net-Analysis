@@ -7,6 +7,7 @@ class EventList extends React.Component {
     const eventData = this.props.eventData
     console.log(eventData)
     const results = []
+    
     for (var resultList in eventData) {
       console.log(resultList)
       const keyedResult = eventData[resultList]
@@ -22,16 +23,18 @@ class EventList extends React.Component {
     }
     return(
       <table className="table table-hover">
-        <tbody>
-          <tr>
-            <th>Meet</th>
-            <th>Date</th>
-            <th>Result</th>
-            <th>Percentile</th>
+          <thead class='thead-light'>
+            <tr>
+              <th>Meet</th>
+              <th>Date</th>
+              <th>Result</th>
+              <th>Percentile</th>
+            </tr>
+          </thead>
+          <tbody>
+            {results}
+          </tbody>
 
-          </tr>
-          {results}
-        </tbody>
 
       </table>
     )

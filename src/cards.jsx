@@ -14,10 +14,15 @@ class Cards extends React.Component {
     var events;
     for (events in cardData ) {
       console.log(events)
-      const eventResults = cardData[events]
+      const eventResults = cardData[events]['results']
+      const averagePercent = cardData[events]['averagePercent']
       cards.push(
         <div className="card" key={events}>
-          <h2 className="card-title"><b>{events}</b></h2>
+          <div className="titleSlot">
+            <h2 className="card-title"><b>{events}</b></h2>
+            <h5 className="averagePercent" key={averagePercent}>Avg {averagePercent}</h5>
+          </div>
+
           <EventList eventData={eventResults}/>
         </div>
       )

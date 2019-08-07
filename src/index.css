@@ -5,12 +5,10 @@
   text-align: center;
 }
 
-
-
 form {
-  margin: 15px;
+  margin: 25px;
   height: 40px;
-  width: 300px;
+  width: 500px;
 }
 
 .mainForm {
@@ -21,7 +19,7 @@ form {
 .cards {
   display: flex;
   flex-wrap: wrap;
-  justify-content: space-between;
+  justify-content: space-evenly;
   align-items: flex-start;
 }
 
@@ -30,4 +28,9 @@ form {
   margin: 25px;
   padding: 20px;
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+
+.titleSlot {
+  display:flex;
+  align-items: flex-end;
 }
