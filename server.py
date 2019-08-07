@@ -21,7 +21,7 @@ def getPercentile(package):
     #print(aid)
 
     athleteData = getAthlete(aid, s, 'regular')
-    print(athleteData)
+    #print(athleteData)
     package['name'] = athleteData['name']
     package['gender'] = athleteData['gender']
 
@@ -51,7 +51,7 @@ def api():
         #print(state)
         data = getPercentile(state)
         state["cardResults"] = cards(data)
-        print(state["cardResults"])
+        #print(state["cardResults"])
         state["graphResults"] = graph(data)
 
         return jsonify(state)
