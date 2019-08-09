@@ -1,7 +1,5 @@
 from statistics import mean
 
-
-
 def graph(data):
     #print(package)
 
@@ -56,13 +54,13 @@ def cards(data):
             #print('added')
 
     for events in cardFormat:
-        print(cardFormat[events])
+        #print(cardFormat[events])
         resultpercentileList = []
         for results in cardFormat[events]["results"]:
-            print(results)
+            #print(results)
             resultpercentileList.append(float(results['percentile'].replace('%', '')))
 
         percentile = mean(resultpercentileList)
         cardFormat[events]['averagePercent'] = str(percentile).split(".")[0] + "%"
-        print(percentile)
+
     return(cardFormat)

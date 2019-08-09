@@ -1,15 +1,13 @@
 import React from 'react';
 
-
-
 class EventList extends React.Component {
   render() {
     const eventData = this.props.eventData
-    console.log(eventData)
+    //console.log(eventData)
     const results = []
-    
+
     for (var resultList in eventData) {
-      console.log(resultList)
+      //console.log(resultList)
       const keyedResult = eventData[resultList]
       results.push(
         <tr>

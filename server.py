@@ -26,7 +26,7 @@ def getPercentile(package):
     package['gender'] = athleteData['gender']
 
     package['results'] = athleteData['results']
-    package['state_'] = athleteData['state_']
+    package['location'] = athleteData['location']
 
     for results in package['results']:
         '''
@@ -58,7 +58,7 @@ def api():
 
 
 if __name__ == '__main__':
-    app.run()
+    app.run(debug=True)
 
 
 testRequest = {'aid':'13940334', 'form':{"state":"", "grade":"True", "gender":"f"}}

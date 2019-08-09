@@ -41,7 +41,7 @@ def getAthlete(aid, session, mode):
     #athleteResults = open('Athlete.aspx', 'r')
     page = BeautifulSoup(athleteResults, features='html.parser')
     #print(page.prettify())
-    mainForm = {'name':'','gender':'', 'state_':'', 'results':[]}
+    mainForm = {'name':'','gender':'', 'location':'', 'results':[]}
 
     try:
         name = str(page.find(property="og:title")["content"])
@@ -52,7 +52,7 @@ def getAthlete(aid, session, mode):
         mainForm['gender'] = gender
 
         state = page.find("title").text[:-22].replace(name, "")[-2:]
-        mainForm['state_'] = state
+        mainForm['location'] = state
         #print(state)
         #print(mainForm)
 

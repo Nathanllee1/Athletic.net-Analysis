@@ -10,11 +10,9 @@ class VisualForm extends React.Component {
       gender = 'Females'
     }
 
-
-
     return(
       <div className="VisualForm">
-        How does <b>{this.props.name}</b> stack up against <b>{gender}</b> in <b>{this.props.state_}</b> in the same <b>Age</b>?
+        How does <b>{this.props.name}</b> stack up against <b>{gender}</b> in <button className='btn btn-outline-succes btn-lg' onClick={this.props.stateClick}>{this.props.location}</button> in the same <b>Age</b>?
       </div>
     )
   }

@@ -14,9 +14,10 @@ def Filter(result, allData, stateStatus, gradeLevel, genderStatus):
     #print(dataCopy)
     #print(package)
     if stateStatus == 'True':
-        #print('filtering ' + package["state_"])
+        #print('filtering ' + result["state"])
         dataCopy = filterResults(result["state"], dataCopy, "state")
-
+    else:
+        print('not filtering location')
     if gradeLevel == "True":
         #print('filtering ' + package["grade"])
         dataCopy = filterResults(result["gradeLevel"], dataCopy, "gradeLevel")
@@ -63,7 +64,6 @@ def percentile(filteredData, singleRequest):
     resultList = noError['splitTime'].values.tolist()
     #print(resultList)
     floatResults = []
-    print()
     #print(singleRequest)
     for results in resultList:
         try:

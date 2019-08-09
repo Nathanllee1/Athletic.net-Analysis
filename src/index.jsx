@@ -15,23 +15,27 @@ class App extends React.Component {
     this.state = {
       cardResults: '',
       graphResults: '',
-      status: 'initialpageload',
+      status: '',
       aid: '',
 
-      state_: '',
-      stateStatus: 'True',
+      location: '',
+      stateStatus: '',
 
-      grade: 'True',
+      grade: '',
 
       gender: '',
-      genderStatus: 'True',
+      genderStatus: '',
 
       name: '',
     };
     this.onSubmit = this.onSubmit.bind(this);
     this.onChange = this.onChange.bind(this);
     this.getData = this.getData.bind(this);
+    this.stateClick = this.stateClick.bind(this);
+  }
 
+  componentDidMount() {
+    this.setState({stateStatus:'True', grade:'True', genderStatus:'True'})
   }
 
   getData() {
@@ -68,6 +72,17 @@ class App extends React.Component {
 
   };
 
+  stateClick() {
+    console.log('state Clicked')
+    if(this.state.stateStatus == 'True') {
+      this.setState({ stateStatus:'False'})
+      this.setState({ state_ : "Everywhere"})
+    } else {
+      this.setState({ stateStatus:'True'})
+    }
+    this.getData()
+  }
+
   onChange(event) {
     this.setState({aid : event.target.value})
   };
@@ -78,7 +93,7 @@ class App extends React.Component {
       return  (
         <div>
           <AIDForm onSubmit={this.onSubmit} onChange={this.onChange} />
-          <VisualForm state_={this.state.state_} gender={this.state.gender} name={this.state.name} />
+          <VisualForm location={this.state.state_} gender={this.state.gender} name={this.state.name} stateClick={this.stateClick}/>
 
           <Cards data={this.state.cardResults}/>
 
