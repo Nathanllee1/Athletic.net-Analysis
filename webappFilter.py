@@ -14,7 +14,7 @@ def Filter(result, allData, stateStatus, gradeLevel, genderStatus):
     #print(dataCopy)
     #print(package)
     if stateStatus == 'True':
-        #print('filtering ' + result["state"])
+        print('filtering state')
         dataCopy = filterResults(result["state"], dataCopy, "state")
     else:
         print('not filtering location')

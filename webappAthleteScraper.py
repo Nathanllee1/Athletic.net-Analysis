@@ -36,7 +36,7 @@ def login():
 
 spacer = '================================================================================='
 
-def getAthlete(aid, session, mode):
+def getAthlete(aid, session, mode, locationMode):
     athleteResults = session.get("https://www.athletic.net/TrackAndField/Athlete.aspx?AID=" + aid).text
     #athleteResults = open('Athlete.aspx', 'r')
     page = BeautifulSoup(athleteResults, features='html.parser')
@@ -103,7 +103,15 @@ def getAthlete(aid, session, mode):
                         resultForm['gradeLevel'] = gradeLevel
                         resultForm['event'] = event
                         resultForm['gender'] = gender
-                        resultForm['state'] = state
+                        print(locationMode)
+                        if locationMode == 'Everywhere':
+                            print('not setting state')
+                        else:
+                            print('setting state')
+                            resultForm['state'] = state
+
+
+
                         resultForm['season'] = seasonName
                         #print(spacer)
                         rowcounter = 0

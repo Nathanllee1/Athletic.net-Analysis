@@ -55,8 +55,7 @@ class App extends React.Component {
       })
       .then((json) =>
         this.setState(json)
-
-      );
+      )
   }
 
   onSubmit(value) {
@@ -69,17 +68,18 @@ class App extends React.Component {
     //this.setState({data});
     //this.state = data
     this.setState({ status:"loaded" });
-
   };
 
   stateClick() {
     console.log('state Clicked')
     if(this.state.stateStatus == 'True') {
-      this.setState({ stateStatus:'False'})
-      this.setState({ state_ : "Everywhere"})
+      this.setState({ stateStatus:'False', location: 'Everywhere'});
+      console.log('setting false')
     } else {
       this.setState({ stateStatus:'True'})
+      console.log('setting true')
     }
+    console.log(this.state)
     this.getData()
   }
 
@@ -93,7 +93,7 @@ class App extends React.Component {
       return  (
         <div>
           <AIDForm onSubmit={this.onSubmit} onChange={this.onChange} />
-          <VisualForm location={this.state.state_} gender={this.state.gender} name={this.state.name} stateClick={this.stateClick}/>
+          <VisualForm location={this.state.location} gender={this.state.gender} name={this.state.name} stateClick={this.stateClick}/>
 
           <Cards data={this.state.cardResults}/>
 

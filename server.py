@@ -13,20 +13,24 @@ s = login()
 database = pd.read_csv("database.csv")
 print('Loaded database')
 
-
-
 def getPercentile(package):
     #print(package)
     aid = package['aid']
     #print(aid)
 
-    athleteData = getAthlete(aid, s, 'regular')
+    athleteData = getAthlete(aid, s, 'regular', package['location'])
     #print(athleteData)
     package['name'] = athleteData['name']
     package['gender'] = athleteData['gender']
 
     package['results'] = athleteData['results']
-    package['location'] = athleteData['location']
+
+    print(package['stateStatus'])
+    if package['stateStatus']:
+        package['location'] = athleteData['location']
+    else:
+        package['stateStatus'] = 'False'
+        package['location'] = 'Everywhere'
 
     for results in package['results']:
         '''
@@ -53,6 +57,7 @@ def api():
         state["cardResults"] = cards(data)
         #print(state["cardResults"])
         state["graphResults"] = graph(data)
+        print(state)
 
         return jsonify(state)
 
