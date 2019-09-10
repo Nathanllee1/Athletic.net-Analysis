@@ -2,7 +2,7 @@ import requests
 from bs4 import BeautifulSoup
 import datetime
 from time import strptime
-
+from webappFilter import postCleaner
 import traceback
 
 from webappFilter import postCleaner
@@ -128,24 +128,9 @@ def getAthlete(aid, session, mode, locationMode):
                             #resultform['region'] = region
                             if rowcounter==1:
                                 result = rowData
-                                if "SR" in result:
-                                    #print(result)
-                                    resultForm['result'] = result.replace("SR", "")
-                                    #print(resultForm['result'])
-                                    if "(" in result:
-                                        resultForm['result'] = rowData[:-3]
-                                    #print('Fixed')
-                                    #print('time: ' + resultForm['result'])
-                                if "PR" in result:
-                                    #print(result)
-                                    resultForm['result'] = result.replace("PR", "")
-                                    if "(" in result:
-                                        resultForm['result'] = rowData[:-3]
-                                    #print('Fixed')
-                                    #print('time: ' + resultForm['result'])
 
-                                else:
-                                    resultForm['result'] = rowData
+                                resultForm['result'] = postCleaner(result)
+
                                     #print('Didn"t fix')
                                 #result = postCleaner(rowData)
 
