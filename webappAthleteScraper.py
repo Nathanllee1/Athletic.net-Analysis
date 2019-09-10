@@ -162,7 +162,7 @@ def getAthlete(aid, session, mode, locationMode):
                                 if len(day) == 1:
                                     "0" + day
 
-                                officialDate = year + '-' + month + "-" + day
+                                officialDate = month + " " + day + ", " + year
                                 #print(officialDate)
 
                                 resultForm['date'] = officialDate

@@ -28,28 +28,30 @@ def Filter(result, allData, stateStatus, gradeLevel, genderStatus):
 
 def percentileConverter(result):
     result = postCleaner(str(result))
+    try:
+        if ':' in result:
+            splitResult = re.split(":", result)
 
-    if ':' in result:
-        splitResult = re.split(":", result)
+            if len(splitResult) == 1:
+                return float(splitResult)
+            if len(splitResult) == 2:
 
-        if len(splitResult) == 1:
-            return float(splitResult)
-        if len(splitResult) == 2:
-
-            return float(splitResult[0]) * 60 + float(splitResult[1])
-        if len(splitResult) == 3:
-            return float(splitResult[0]) * 60 + float(splitResult[1]) * 60 + float(splitResult[2])
-    if "'" in result:
-        splitDistance = re.split("'", result)
-        if len(splitDistance) == 1:
-            return float(splitDistance)
-        if len(splitDistance) == 2:
-            return float(splitDistance[0]) * 12 + float(splitDistance[1])
-    else:
-        return float(result)
+                return float(splitResult[0]) * 60 + float(splitResult[1])
+            if len(splitResult) == 3:
+                return float(splitResult[0]) * 60 + float(splitResult[1]) * 60 + float(splitResult[2])
+        if "'" in result:
+            splitDistance = re.split("'", result)
+            if len(splitDistance) == 1:
+                return float(splitDistance)
+            if len(splitDistance) == 2:
+                return float(splitDistance[0]) * 12 + float(splitDistance[1])
+        else:
+            return float(result)
+    except:
+        return(0)
 
 def postCleaner(result):
-    result = result.replace("PR", "").replace("SR", "").replace("h", "0").replace("c", "").replace("m", "")
+    result = result.replace("PR", "").replace("SR", "").replace("h", "0").replace("c", "").replace("m", "").replace("SCR", "")
     if "(" in result and ")" not in result:
         return result[:-5]
     #print(result)

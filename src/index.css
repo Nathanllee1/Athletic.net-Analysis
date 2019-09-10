@@ -1,4 +1,7 @@
-
+#instructionList {
+  margin-left: 20px;
+  font-size: 20px;
+}
 
 .VisualForm {
   font-size: 50px;
@@ -33,4 +36,9 @@ form {
 .titleSlot {
   display:flex;
   align-items: flex-end;
+}
+
+.averagePercent {
+  margin-bottom: 16px;
+  margin-left: 5px;
 }

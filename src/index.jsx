@@ -35,7 +35,7 @@ class App extends React.Component {
   }
 
   componentDidMount() {
-    this.setState({stateStatus:'True', grade:'True', genderStatus:'True'})
+    this.setState({stateStatus:'False', grade:'True', genderStatus:'True'})
   }
 
   getData() {
