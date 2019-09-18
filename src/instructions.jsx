@@ -5,7 +5,7 @@ class Instructions extends React.Component {
     return (
       <div id="instructionList">
         <div>
-          1) Got to your athletic.net profile
+          1) Got to your <a href="https://athletic.net" target="_blank">athletic.net</a> profile
           <br></br>
           2) Look at the URL and get the number at the very end
           <br></br>
